@@ -23,7 +23,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="62.5" placeholderIntrinsicHeight="62.5" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="72N-GS-1vh">
-                                <rect key="frame" x="253.5" y="243.5" width="46.5" height="46.5"/>
+                                <rect key="frame" x="230" y="220" width="70" height="70"/>
                                 <color key="backgroundColor" red="0.2470588235" green="0.47058823529999999" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" image="slr-camera-2-xxl"/>
                                 <connections>
@@ -46,11 +46,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="40" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OZm-SM-eet">
-                                <rect key="frame" x="60" y="508" width="200" height="40"/>
+                                <rect key="frame" x="20" y="508" width="280" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="JtG-Y7-jvE"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="Wd6-Ad-O4J"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="BradleyHandITCTT-Bold" family="Bradley Hand" pointSize="17"/>
                                 <state key="normal" title="Редактировать">
@@ -63,15 +62,16 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="OZm-SM-eet" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4tx-6k-ZON"/>
-                            <constraint firstItem="72N-GS-1vh" firstAttribute="height" secondItem="APB-Wu-jkM" secondAttribute="height" multiplier="1:6" id="5FS-5h-xuf"/>
+                            <constraint firstItem="72N-GS-1vh" firstAttribute="height" secondItem="APB-Wu-jkM" secondAttribute="height" multiplier="1:4" id="5FS-5h-xuf"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="OZm-SM-eet" secondAttribute="trailing" constant="20" id="6nW-9k-NIk"/>
                             <constraint firstItem="OZm-SM-eet" firstAttribute="top" relation="greaterThanOrEqual" secondItem="O9R-lE-Hen" secondAttribute="bottom" constant="10" id="DMf-If-cAs"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="APB-Wu-jkM" secondAttribute="trailing" constant="20" id="HAE-NO-cPU"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="O9R-lE-Hen" secondAttribute="trailing" constant="20" id="Lbl-hJ-gMP"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="OZm-SM-eet" secondAttribute="bottom" constant="20" id="QSJ-wq-Fnn"/>
+                            <constraint firstItem="OZm-SM-eet" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="WvV-dh-9G2"/>
                             <constraint firstItem="ecq-sX-PKn" firstAttribute="top" secondItem="APB-Wu-jkM" secondAttribute="bottom" constant="15" id="bab-XS-HUO"/>
                             <constraint firstItem="72N-GS-1vh" firstAttribute="bottom" secondItem="APB-Wu-jkM" secondAttribute="bottom" id="dpJ-TI-LDv"/>
-                            <constraint firstItem="72N-GS-1vh" firstAttribute="width" secondItem="APB-Wu-jkM" secondAttribute="width" multiplier="1:6" id="f96-BY-Xr1"/>
+                            <constraint firstItem="72N-GS-1vh" firstAttribute="width" secondItem="APB-Wu-jkM" secondAttribute="width" multiplier="1:4" id="f96-BY-Xr1"/>
                             <constraint firstItem="ecq-sX-PKn" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="hpr-9a-8Zw"/>
                             <constraint firstItem="APB-Wu-jkM" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="lGr-Cg-Oq6"/>
                             <constraint firstItem="O9R-lE-Hen" firstAttribute="top" secondItem="ecq-sX-PKn" secondAttribute="bottom" constant="10" id="lPO-aC-AsD"/>
