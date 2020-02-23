@@ -66,12 +66,7 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        choosePhotoButton.layer.cornerRadius = choosePhotoButton.imageView!.frame.size.height / 2
-        choosePhotoButton.imageView?.contentMode = .scaleAspectFit
-        choosePhotoButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        choosePhotoButton.clipsToBounds = true
         
-        profileImageView.layer.cornerRadius = choosePhotoButton.layer.cornerRadius
         
         editButton.layer.cornerRadius = 10
         editButton.layer.borderWidth = 2.0
@@ -99,6 +94,13 @@ class ProfileViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        choosePhotoButton.layer.cornerRadius = choosePhotoButton.frame.size.height / 2
+        choosePhotoButton.imageView?.contentMode = .scaleAspectFit
+        choosePhotoButton.imageEdgeInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
+        choosePhotoButton.clipsToBounds = true
+        
+        profileImageView.layer.cornerRadius = choosePhotoButton.layer.cornerRadius
         
         print("EditButton frame : \(editButton.frame) from \(#function)")
         //Frame has changed because at viewDidLoad function subviews are not laid out. Before viewDidAppear all subviews become laid out and origin of frame changes.
