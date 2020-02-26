@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    var presentApplicationLifecycleLogs = true
+    var presentApplicationLifecycleLogs = false
 
     // MARK: Application Lifecycle
     
