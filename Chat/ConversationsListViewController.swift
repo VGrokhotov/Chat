@@ -19,15 +19,10 @@ class ConversationsListViewController: UIViewController {
 
         tableView.delegate = self
         tableView.dataSource = self
+        
         tableView.register(UINib(nibName: String(describing: ConversationCell.self), bundle: Bundle.main), forCellReuseIdentifier: String(describing: ConversationCell.self))
         
         title = "Tinkoff Chat"
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        tableView.reloadData()
     }
     
     @IBAction func profileButtonPressed(_ sender: Any) {
@@ -77,10 +72,10 @@ extension ConversationsListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let identifier = String(describing: ConversationCell.self)
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? ConversationCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? ConversationCell else { return ConversationCell() }
         
         cell.configure(with: cells[indexPath.section][indexPath.row])
-        
+
         return cell
     }
     

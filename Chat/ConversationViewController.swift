@@ -33,8 +33,8 @@ class ConversationViewController: UIViewController {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         }
         
-        if conversationData != nil {
-            title = conversationData!.name
+        if let conversationData = conversationData{
+            title = conversationData.name
         }
         
         tableView.delegate = self
