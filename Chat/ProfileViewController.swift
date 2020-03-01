@@ -10,11 +10,11 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        //print("EditButton frame : \(editButton.frame) from \(#function)")
-        //Can not refer to editButton IBOutlet because it is nil: button has not been added to View Controller yet
-    }
+//    required init?(coder: NSCoder) {
+//        super.init(coder: coder)
+//        //print("EditButton frame : \(editButton.frame) from \(#function)")
+//        //Can not refer to editButton IBOutlet because it is nil: button has not been added to View Controller yet
+//    }
     
     // MARK: - IBOutlets
     
@@ -29,6 +29,11 @@ class ProfileViewController: UIViewController {
     var presentViewControllerLifecycleLogs = false
 
     // MARK: - IBActions
+    
+    @IBAction func cancelProfile(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     
     @IBAction func choosePhotoButtonAction(_ sender: Any) {
         print("Выбери изображение профиля")
@@ -73,7 +78,7 @@ class ProfileViewController: UIViewController {
         editButton.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         editButton.clipsToBounds = true
         
-        print("EditButton frame : \(editButton.frame) from \(#function)")
+        //print("EditButton frame : \(editButton.frame) from \(#function)")
         
         if presentViewControllerLifecycleLogs{
             print("View controller's view was loaded into memory. Function: \(#function)\n")
@@ -95,14 +100,9 @@ class ProfileViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        choosePhotoButton.layer.cornerRadius = choosePhotoButton.frame.size.height / 2
-        choosePhotoButton.imageView?.contentMode = .scaleAspectFit
-        choosePhotoButton.imageEdgeInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
-        choosePhotoButton.clipsToBounds = true
         
-        profileImageView.layer.cornerRadius = choosePhotoButton.layer.cornerRadius
         
-        print("EditButton frame : \(editButton.frame) from \(#function)")
+        //print("EditButton frame : \(editButton.frame) from \(#function)")
         //Frame has changed because at viewDidLoad function subviews are not laid out. Before viewDidAppear all subviews become laid out and origin of frame changes.
         if presentViewControllerLifecycleLogs{
             print("View controller's view was added to a view hierarchy. Function: \(#function)\n")
@@ -122,6 +122,13 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
+        choosePhotoButton.layer.cornerRadius = choosePhotoButton.frame.size.height / 2
+        choosePhotoButton.imageView?.contentMode = .scaleAspectFit
+        choosePhotoButton.imageEdgeInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
+        choosePhotoButton.clipsToBounds = true
+        
+        profileImageView.layer.cornerRadius = choosePhotoButton.layer.cornerRadius
         
         if presentViewControllerLifecycleLogs{
             print("View controller's view has just laid out its subviews. Function: \(#function)\n")
