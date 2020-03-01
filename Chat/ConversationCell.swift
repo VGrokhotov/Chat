@@ -18,7 +18,7 @@ class ConversationCell: UITableViewCell, ConfigurableView {
         
         if let message = model.message{
             messageLabel.text = message
-            messageLabel.font = UIFont(name: "HelveticaNeue", size: 17)
+            messageLabel.font = UIFont.systemFont(ofSize: 17)
         } else{
             messageLabel.text = "No messages yet"
             messageLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 17)
@@ -52,7 +52,7 @@ class ConversationCell: UITableViewCell, ConfigurableView {
         }
         
         if model.hasUnreadMessages{
-            messageLabel.font = UIFont.boldSystemFont(ofSize: 17)
+            messageLabel.font = UIFont.boldSystemFont(ofSize: 18)
         } else{
             messageLabel.font = UIFont.systemFont(ofSize: 17)
         }

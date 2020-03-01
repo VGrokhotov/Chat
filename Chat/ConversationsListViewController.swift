@@ -30,6 +30,11 @@ class ConversationsListViewController: UIViewController {
         tableView.reloadData()
     }
     
+    @IBAction func profileButtonPressed(_ sender: Any) {
+        let destinationViewController = ProfileViewController.makeVC()
+        present(destinationViewController, animated: true)
+    }
+    
 
 }
 

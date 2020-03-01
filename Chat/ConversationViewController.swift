@@ -17,11 +17,13 @@ class ConversationViewController: UIViewController {
     var messages: [MessageCellModel] = StorageManager.messages()
     
     static func makeVC(with data: ConversationCellModel) -> ConversationViewController {
-        let newViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ConversationViewController") as! ConversationViewController
+        let newViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: String(describing: ConversationViewController.self)) as? ConversationViewController
+        
+        guard let newVC = newViewController else {return ConversationViewController()}
+        
+        newVC.conversationData = data
 
-        newViewController.conversationData = data
-
-        return newViewController
+        return newVC
     }
 
     override func viewDidLoad() {
@@ -54,8 +56,11 @@ class ConversationViewController: UIViewController {
 extension ConversationViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 72
+        return 49
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)    }
     
 }
 

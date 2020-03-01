@@ -68,6 +68,14 @@ class ProfileViewController: UIViewController {
         print("Редактирование профиля")
     }
     
+    static func makeVC() -> ProfileViewController {
+        let newViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: String(describing: ProfileViewController.self)) as? ProfileViewController
+        
+        guard let newVC = newViewController else {return ProfileViewController()}
+
+        return newVC
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
