@@ -197,7 +197,7 @@ class Company{
     
     var developers: [Developer] = []
     
-    init(name: String, _ ceo: CEO, _ manager: ProductManager, _ developers: [Developer]){
+    init(name: String, ceo: CEO, manager: ProductManager, developers: [Developer]){
         
         self.name = name
         self.ceo = ceo
@@ -221,7 +221,7 @@ class Company{
 }
 
 func getCompany() -> Company {
-    return Company(name: "My Company", CEO(name: "Alex"), ProductManager(name: "Sasha"), [Developer(name: "Vlad"), Developer(name: "Ivan")])
+    return Company(name: "My Company", ceo: CEO(name: "Alex"), manager: ProductManager(name: "Sasha"), developers: [Developer(name: "Vlad"), Developer(name: "Ivan")])
 }
 
 var company: Company? = getCompany()
