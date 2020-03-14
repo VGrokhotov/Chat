@@ -26,22 +26,6 @@ class GCDDataManager{
                 description: description,
                 image: image)
             
-            queue.async {
-                
-                let image = self.readImage()
-                let name = self.readName()
-                let description = self.readDescription()
-                
-                DispatchQueue.main.async {
-                    self.profileVC?.didSwitchToViewMode(
-                        name: name,
-                        description: description,
-                        image: image,
-                        isSaving: true
-                    )
-                }
-            }
-            
         }
     }
     
@@ -65,77 +49,76 @@ class GCDDataManager{
     }
     
     func saveData(name: String?, description: String?, image: UIImage?){
-        saveName(name: name)
-        saveDescription(description: description)
-        saveImage(image: image)
-    }
-    
-    func saveName(name: String?){
         let nameFile = "name.txt"
-
+        
         guard let name = name else {return}
-
-        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-
-            let fileURL = dir.appendingPathComponent(nameFile)
-            
-
-            do {
-                try name.write(to: fileURL, atomically: false, encoding: .utf8)
-                
-            }
-            catch {
-                DispatchQueue.main.async {
-                    //self.showAlertWithRetry(title: "Saving failed", message: "Could not sava data")
-                }
-            }
- 
-
-        }
-    }
-    
-    func saveDescription(description: String?){
+        
         let descriptionFile = "description.txt"
 
         guard let description = description else {return}
+        
+        let imageFile = "image.png"
 
+        guard let imageData = image?.pngData() else {return}
+        
+        
+        
         if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-
-            let fileURL = dir.appendingPathComponent(descriptionFile)
-
-            do {
-                try description.write(to: fileURL, atomically: false, encoding: .utf8)
             
-            }
-            catch {
-                DispatchQueue.main.async {
-                    //self.showAlertWithRetry(title: "Saving failed", message: "Could not sava data")
+            let nameURL = dir.appendingPathComponent(nameFile)
+
+            let descriptionURL = dir.appendingPathComponent(descriptionFile)
+            
+            let imageURL = dir.appendingPathComponent(imageFile)
+            
+            let queue = DispatchQueue( label:"com.app.queue", qos: .userInteractive, attributes:.concurrent)
+            queue.async {
+                do {
+                    
+                    try name.write(to: nameURL, atomically: false, encoding: .utf8)
+                    try description.write(to: descriptionURL, atomically: false, encoding: .utf8)
+                    try imageData.write(to: imageURL, options: .atomic)
+                    
+//                    enum MyError: Error {
+//                        case runtimeError(String)
+//                    }
+//                    throw MyError.runtimeError("l")
+                    
+                    queue.async {
+                        
+                        let image = self.readImage()
+                        let name = self.readName()
+                        let description = self.readDescription()
+                        
+                        DispatchQueue.main.async {
+                            self.profileVC?.didSwitchToViewMode(
+                                name: name,
+                                description: description,
+                                image: image,
+                                isSaving: true
+                            )
+                        }
+                    }
                 }
+                catch {
+                    DispatchQueue.main.async {
+                        self.showAlertWithRetry(
+                            title: "Saving failed",
+                            message: "Could not sava data",
+                            name: name,
+                            description: description,
+                            image: image)
+                    }
+                    
+                }
+                
+                
             }
+            
+            
         }
     }
     
-    func saveImage(image: UIImage?){
-        let imageFile = "image.png"
-
-        guard let image = image?.pngData() else {return}
-        
-        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-
-            let fileURL = dir.appendingPathComponent(imageFile)
-
-            do {
-                try image.write(to: fileURL, options: .atomic)
-            }
-            catch {
-                DispatchQueue.main.async {
-                    //self.showAlertWithRetry(title: "Saving failed", message: "Could not sava data", )
-                }
-            }
-
-        }
-        
-    }
 
     
     func readName() -> String {
@@ -210,6 +193,7 @@ class GCDDataManager{
     
     func showAlertWithRetry(title: String, message: String, name: String?, description: String?, image: UIImage?){
         profileVC?.activityIndicator.stopAnimating()
+        profileVC?.enableButtons()
         let allert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default)
         let retryAction = UIAlertAction(title: "Retry", style: .default) { _ in

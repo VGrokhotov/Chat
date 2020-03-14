@@ -164,13 +164,17 @@ extension ProfileViewController{
         }
     }
     
+    func enableButtons() {
+        operationButton.isEnabled = true
+        GCDButton.isEnabled = true
+        choosePhotoButton.isEnabled = true
+    }
+    
     func switchToEditting() {
         nameTextField.text = nameLabel.text
         descriptionTextView.text = descriptionLabel.text
         
-        operationButton.isEnabled = true
-        GCDButton.isEnabled = true
-        choosePhotoButton.isEnabled = true
+        enableButtons()
         
         hide(view: nameLabel)
         hide(view: descriptionLabel)
