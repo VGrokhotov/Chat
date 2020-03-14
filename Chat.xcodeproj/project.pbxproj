@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		86280B2A241D10BD007F1E37 /* GCDDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86280B29241D10BD007F1E37 /* GCDDataManager.swift */; };
+		86280B2C241D10FE007F1E37 /* OperationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86280B2B241D10FE007F1E37 /* OperationDataManager.swift */; };
 		86294BC8240ADA94000638AA /* ConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86294BC6240ADA94000638AA /* ConversationCell.swift */; };
 		86294BC9240ADA94000638AA /* ConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86294BC7240ADA94000638AA /* ConversationCell.xib */; };
 		86294BCF240B1A3C000638AA /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86294BCE240B1A3C000638AA /* StorageManager.swift */; };
@@ -34,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		86280B29241D10BD007F1E37 /* GCDDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDDataManager.swift; sourceTree = "<group>"; };
+		86280B2B241D10FE007F1E37 /* OperationDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationDataManager.swift; sourceTree = "<group>"; };
 		86294BC6240ADA94000638AA /* ConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCell.swift; sourceTree = "<group>"; };
 		86294BC7240ADA94000638AA /* ConversationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationCell.xib; sourceTree = "<group>"; };
 		86294BCE240B1A3C000638AA /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
@@ -119,6 +123,8 @@
 				864DB3AB240ABA0D00968029 /* ConversationViewController.swift */,
 				86EE09A123F9B91700D03091 /* Main.storyboard */,
 				86294BCE240B1A3C000638AA /* StorageManager.swift */,
+				86280B29241D10BD007F1E37 /* GCDDataManager.swift */,
+				86280B2B241D10FE007F1E37 /* OperationDataManager.swift */,
 				86EE09A723F9B91900D03091 /* Assets.xcassets */,
 				86EE09A923F9B91900D03091 /* LaunchScreen.storyboard */,
 				86EE09AC23F9B91900D03091 /* Info.plist */,
@@ -240,11 +246,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				86EE09A023F9B91700D03091 /* ProfileViewController.swift in Sources */,
+				86280B2C241D10FE007F1E37 /* OperationDataManager.swift in Sources */,
 				8673CF69240BA95900BFE738 /* MessageCell.swift in Sources */,
 				864DB3AA240AB9E900968029 /* ConversationsListViewController.swift in Sources */,
 				86294BC8240ADA94000638AA /* ConversationCell.swift in Sources */,
 				86294BCF240B1A3C000638AA /* StorageManager.swift in Sources */,
 				864DB3AC240ABA0D00968029 /* ConversationViewController.swift in Sources */,
+				86280B2A241D10BD007F1E37 /* GCDDataManager.swift in Sources */,
 				86EE09A623F9B91700D03091 /* Chat.xcdatamodeld in Sources */,
 				86EE099C23F9B91700D03091 /* AppDelegate.swift in Sources */,
 			);

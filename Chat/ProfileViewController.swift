@@ -10,12 +10,6 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-//    required init?(coder: NSCoder) {
-//        super.init(coder: coder)
-//        //print("EditButton frame : \(editButton.frame) from \(#function)")
-//        //Can not refer to editButton IBOutlet because it is nil: button has not been added to View Controller yet
-//    }
-    
     // MARK: - IBOutlets
     
     @IBOutlet weak var profileImageView: UIImageView!
@@ -23,10 +17,16 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var descriptionTextView: UITextView!
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var operationButton: UIButton!
+    @IBOutlet weak var GCDButton: UIButton!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     // MARK: - Vars and Lets
     
-    var presentViewControllerLifecycleLogs = false
+    var operationDataManager: OperationDataManager?
+    var gcdDataManager: GCDDataManager?
 
     // MARK: - IBActions
     
@@ -34,9 +34,215 @@ class ProfileViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+
     
     @IBAction func choosePhotoButtonAction(_ sender: Any) {
-        print("Выбери изображение профиля")
+        showPhotoActionSheet()
+    }
+    
+    @IBAction func editButtonPressed(_ sender: Any) {
+        switchToEditting()
+    }
+    
+    
+    @IBAction func operationButtonPressed(_ sender: Any) {
+        
+        willSwitchToViewMode()
+        operationDataManager?.saveAndShowData(
+            name: nameTextField.text,
+            description: descriptionTextView.text,
+            image: profileImageView.image
+        )
+        
+    }
+    
+    @IBAction func GCDButtonPressed(_ sender: Any) {
+        
+        willSwitchToViewMode()
+        gcdDataManager?.saveAndShowData(
+            name: nameTextField.text,
+            description: descriptionTextView.text,
+            image: profileImageView.image
+        )
+        
+    }
+    
+    //MARK: Satic func
+    
+    static func makeVC() -> ProfileViewController {
+        let newViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: String(describing: ProfileViewController.self)) as? ProfileViewController
+        
+        guard let newVC = newViewController else {return ProfileViewController()}
+
+        return newVC
+    }
+    
+    //MARK: Alert controllers
+    
+    func showAlert(title: String, message: String){
+        activityIndicator.stopAnimating()
+        let allert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default)
+        
+        allert.addAction(okAction)
+        present(allert, animated: true)
+    }
+    
+    
+    //MARK: View DidLoad
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        gcdDataManager = GCDDataManager(profileVC: self)
+        operationDataManager = OperationDataManager(profileVC: self)
+        
+        profileImageView.contentMode = .scaleAspectFill
+        
+        activityIndicator.startAnimating()
+
+        gcdDataManager?.readData(isSaving: false)
+        
+        setupToHideKeyboardOnTapOnView()
+        
+        nameTextField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
+        
+        registerForKeyboardNotification()
+        
+        editButton.layer.cornerRadius = 10
+        editButton.layer.borderWidth = 2.0
+        editButton.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        editButton.clipsToBounds = true
+        
+        GCDButton.layer.cornerRadius = 10
+        GCDButton.layer.borderWidth = 2.0
+        GCDButton.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        GCDButton.clipsToBounds = true
+        
+        operationButton.layer.cornerRadius = 10
+        operationButton.layer.borderWidth = 2.0
+        operationButton.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        operationButton.clipsToBounds = true
+
+    }
+    
+    deinit {
+        removeKeyboardNotification()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        choosePhotoButton.layer.cornerRadius = choosePhotoButton.frame.size.height / 2
+        choosePhotoButton.imageView?.contentMode = .scaleAspectFit
+        choosePhotoButton.imageEdgeInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
+        choosePhotoButton.clipsToBounds = true
+        
+        profileImageView.layer.cornerRadius = choosePhotoButton.layer.cornerRadius
+        
+    }
+
+}
+
+// MARK: - Switching of mode
+
+extension ProfileViewController{
+    
+    func hide(view: UIView) {
+        UIView.animate(withDuration: 0.5, animations: {
+            view.alpha = 0
+        }) { (finished) in
+            view.isHidden = finished
+        }
+    }
+    
+    func show(view: UIView) {
+        view.alpha = 0
+        view.isHidden = false
+        UIView.animate(withDuration: 0.6) {
+            view.alpha = 1
+        }
+    }
+    
+    func switchToEditting() {
+        nameTextField.text = nameLabel.text
+        descriptionTextView.text = descriptionLabel.text
+        
+        operationButton.isEnabled = true
+        GCDButton.isEnabled = true
+        choosePhotoButton.isEnabled = true
+        
+        hide(view: nameLabel)
+        hide(view: descriptionLabel)
+        hide(view: editButton)
+        
+        show(view: choosePhotoButton)
+        show(view: nameTextField)
+        show(view: descriptionTextView)
+        show(view: operationButton)
+        show(view: GCDButton)
+    }
+    
+    func willSwitchToViewMode() {
+        operationButton.isEnabled = false
+        GCDButton.isEnabled = false
+        choosePhotoButton.isEnabled = false
+        activityIndicator.startAnimating()
+    }
+    
+    func didSwitchToViewMode(name: String?, description: String?, image: UIImage?, isSaving: Bool){
+        
+        profileImageView.image = image
+        nameLabel.text = name
+        descriptionLabel.text = description
+        
+        activityIndicator.stopAnimating()
+        
+        if isSaving {
+        
+            show(view: nameLabel)
+            show(view: descriptionLabel)
+            show(view: editButton)
+            
+            hide(view: choosePhotoButton)
+            hide(view: nameTextField)
+            hide(view: descriptionTextView)
+            hide(view: operationButton)
+            hide(view: GCDButton)
+        
+        
+            showAlert(title: "Successfully saved!", message: "All information changed successfully")
+        }
+    }
+    
+}
+
+
+// MARK: - Work with image
+
+extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    
+    func chooseImagePicker(source: UIImagePickerController.SourceType){
+        if UIImagePickerController.isSourceTypeAvailable(source){
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.allowsEditing = true
+            imagePicker.sourceType = source
+            present(imagePicker, animated: true)
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        profileImageView.image = info[.editedImage] as? UIImage
+        profileImageView.contentMode = .scaleAspectFill
+        profileImageView.clipsToBounds = true
+        
+        
+        dismiss(animated: true)
+    }
+    
+    func showPhotoActionSheet(){
+        
         let cameraIcon = #imageLiteral(resourceName: "Camera")
         let photoIcon = #imageLiteral(resourceName: "Photo")
 
@@ -63,128 +269,78 @@ class ProfileViewController: UIViewController {
 
         present(actionSheet, animated: true)
     }
-    
-    @IBAction func editButtonPressed(_ sender: Any) {
-        print("Редактирование профиля")
-    }
-    
-    static func makeVC() -> ProfileViewController {
-        let newViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: String(describing: ProfileViewController.self)) as? ProfileViewController
-        
-        guard let newVC = newViewController else {return ProfileViewController()}
-
-        return newVC
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
-        
-        editButton.layer.cornerRadius = 10
-        editButton.layer.borderWidth = 2.0
-        editButton.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        editButton.clipsToBounds = true
-        
-        //print("EditButton frame : \(editButton.frame) from \(#function)")
-        
-        if presentViewControllerLifecycleLogs{
-            print("View controller's view was loaded into memory. Function: \(#function)\n")
-            
-        }
-    }
-    
-    // MARK: ViewController Lifecycle
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        if presentViewControllerLifecycleLogs{
-            print("View controller's view is about to be added to a view hierarchy. Function: \(#function)\n")
-            
-        }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        
-        
-        //print("EditButton frame : \(editButton.frame) from \(#function)")
-        //Frame has changed because at viewDidLoad function subviews are not laid out. Before viewDidAppear all subviews become laid out and origin of frame changes.
-        if presentViewControllerLifecycleLogs{
-            print("View controller's view was added to a view hierarchy. Function: \(#function)\n")
-            
-        }
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
-        if presentViewControllerLifecycleLogs{
-            print("View controller's view is about to layout its subviews. Function: \(#function)\n")
-            
-        }
-    
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        choosePhotoButton.layer.cornerRadius = choosePhotoButton.frame.size.height / 2
-        choosePhotoButton.imageView?.contentMode = .scaleAspectFit
-        choosePhotoButton.imageEdgeInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
-        choosePhotoButton.clipsToBounds = true
-        
-        profileImageView.layer.cornerRadius = choosePhotoButton.layer.cornerRadius
-        
-        if presentViewControllerLifecycleLogs{
-            print("View controller's view has just laid out its subviews. Function: \(#function)\n")
-            
-        }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        if presentViewControllerLifecycleLogs{
-            print("View controller's view is about to be removed from a view hierarchy. Function: \(#function)\n")
-            
-        }
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        if presentViewControllerLifecycleLogs{
-            print("View controller's view was removed from a view hierarchy. Function: \(#function)\n")
-        }
-    }
-
-
 }
 
 
-// MARK: - Work with image
+//MARK: To dismiss keyboard after tapping anywhere else
 
-extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
-    
-    func chooseImagePicker(source: UIImagePickerController.SourceType){
-        if UIImagePickerController.isSourceTypeAvailable(source){
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.allowsEditing = true
-            imagePicker.sourceType = source
-            present(imagePicker, animated: true)
-        }
+extension UIViewController
+{
+    func setupToHideKeyboardOnTapOnView()
+    {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(UIViewController.dismissKeyboard))
+
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+
+    @objc func dismissKeyboard()
+    {
+        view.endEditing(true)
+    }
+}
+
+// MARK: - Text field delegate
+
+extension ProfileViewController: UITextFieldDelegate{
+    //To close the keyboard after Done pressed
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        profileImageView.image = info[.editedImage] as? UIImage
-        profileImageView.contentMode = .scaleAspectFill
-        profileImageView.clipsToBounds = true
+    @objc private func textFieldChanged(){
         
+    }
+}
+
+//MARK: - Text View delegate
+
+extension ProfileViewController: UITextViewDelegate{
+    
+    @objc private func textViewChanged(){
         
-        dismiss(animated: true)
+    }
+
+}
+
+//MARK: Show the content above the keyboard
+
+extension ProfileViewController{
+    
+    func registerForKeyboardNotification(){
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    func removeKeyboardNotification(){
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
     }
 }
