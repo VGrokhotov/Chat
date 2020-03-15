@@ -27,6 +27,10 @@ class ProfileViewController: UIViewController {
     
     var operationDataManager: OperationDataManager?
     var gcdDataManager: GCDDataManager?
+    var hasNameChanged = false
+    var hasDescriptionChanged = false
+    var hasImageChanged = false
+
 
     // MARK: - IBActions
     
@@ -170,6 +174,17 @@ extension ProfileViewController{
         choosePhotoButton.isEnabled = true
     }
     
+    func disableButtons(){
+        operationButton.isEnabled = false
+        GCDButton.isEnabled = false
+        choosePhotoButton.isEnabled = false
+    }
+    
+    func disableSaveButtons(){
+        operationButton.isEnabled = false
+        GCDButton.isEnabled = false
+    }
+    
     func switchToEditting() {
         nameTextField.text = nameLabel.text
         descriptionTextView.text = descriptionLabel.text
@@ -188,9 +203,7 @@ extension ProfileViewController{
     }
     
     func willSwitchToViewMode() {
-        operationButton.isEnabled = false
-        GCDButton.isEnabled = false
-        choosePhotoButton.isEnabled = false
+        disableButtons()
         activityIndicator.startAnimating()
     }
     
@@ -315,7 +328,11 @@ extension ProfileViewController: UITextFieldDelegate{
 extension ProfileViewController: UITextViewDelegate{
     
     @objc private func textViewChanged(){
-        
+        if nameTextField.text?.count == 0{
+            disableSaveButtons()
+        } else {
+            enableButtons()
+        }
     }
 
 }
