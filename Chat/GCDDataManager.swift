@@ -17,7 +17,7 @@ class GCDDataManager{
     }
     
     func saveAndShowData(name: String?, description: String?, image: UIImage?){
-        let queue = DispatchQueue( label:"com.app.queue", qos: .userInteractive, attributes:.concurrent)
+        let queue = DispatchQueue.global(qos: .userInteractive)
         
         queue.async {
         
@@ -30,7 +30,7 @@ class GCDDataManager{
     }
     
     func readData(isSaving: Bool) {
-        let queue = DispatchQueue( label:"com.app.queue", qos: .userInteractive, attributes:.concurrent)
+        let queue = DispatchQueue.global(qos: .userInteractive)
         queue.async {
             
             let image = self.readImage()
@@ -71,51 +71,47 @@ class GCDDataManager{
             
             let imageURL = dir.appendingPathComponent(imageFile)
             
-            let queue = DispatchQueue( label:"com.app.queue", qos: .userInteractive, attributes:.concurrent)
+            let queue = DispatchQueue.global(qos: .userInteractive)
             queue.async {
                 do {
-                    
-                    try name.write(to: nameURL, atomically: false, encoding: .utf8)
-                    try description.write(to: descriptionURL, atomically: false, encoding: .utf8)
-                    try imageData.write(to: imageURL, options: .atomic)
-                    
+                    if self.profileVC?.hasNameChanged ?? true{
+                        try name.write(to: nameURL, atomically: false, encoding: .utf8)
+                    }
+                    if self.profileVC?.hasDescriptionChanged ?? true{
+                        try description.write(to: descriptionURL, atomically: false, encoding: .utf8)
+                    }
+                    if self.profileVC?.hasImageChanged ?? true{
+                        try imageData.write(to: imageURL, options: .atomic)
+                    }
 //                    enum MyError: Error {
 //                        case runtimeError(String)
 //                    }
 //                    throw MyError.runtimeError("l")
                     
-                    queue.async {
-                        
-                        let image = self.readImage()
-                        let name = self.readName()
-                        let description = self.readDescription()
-                        
-                        DispatchQueue.main.async {
-                            self.profileVC?.didSwitchToViewMode(
-                                name: name,
-                                description: description,
-                                image: image,
-                                isSaving: true
-                            )
-                        }
+                    DispatchQueue.main.async {
+                        self.profileVC?.showGCDSuccessAlert(title: "Successfully saved!", message: "All information changed successfully")
                     }
                 }
                 catch {
                     DispatchQueue.main.async {
-                        self.showAlertWithRetry(
+                        self.profileVC?.showGCDAlertWithRetry(
                             title: "Saving failed",
                             message: "Could not sava data",
                             name: name,
                             description: description,
                             image: image)
                     }
-                    
                 }
-                
-                
             }
-            
-            
+        } else {
+            DispatchQueue.main.async {
+                self.profileVC?.showGCDAlertWithRetry(
+                    title: "Saving failed",
+                    message: "Could not sava data",
+                    name: name,
+                    description: description,
+                    image: image)
+            }
         }
     }
     
@@ -191,17 +187,5 @@ class GCDDataManager{
         
     }
     
-    func showAlertWithRetry(title: String, message: String, name: String?, description: String?, image: UIImage?){
-        profileVC?.activityIndicator.stopAnimating()
-        profileVC?.enableButtons()
-        let allert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default)
-        let retryAction = UIAlertAction(title: "Retry", style: .default) { _ in
-            self.saveData(name: name, description: description, image: image)
-        }
-        
-        allert.addAction(okAction)
-        allert.addAction(retryAction)
-        profileVC?.present(allert, animated: true)
-    }
+    
 }
