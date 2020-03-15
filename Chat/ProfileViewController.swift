@@ -53,6 +53,7 @@ class ProfileViewController: UIViewController {
     @IBAction func operationButtonPressed(_ sender: Any) {
         
         willSwitchToViewMode()
+        
         operationDataManager?.saveAndShowData(
             name: nameTextField.text,
             description: descriptionTextView.text,
@@ -64,6 +65,7 @@ class ProfileViewController: UIViewController {
     @IBAction func GCDButtonPressed(_ sender: Any) {
         
         willSwitchToViewMode()
+        
         gcdDataManager?.saveAndShowData(
             name: nameTextField.text,
             description: descriptionTextView.text,
@@ -85,7 +87,9 @@ class ProfileViewController: UIViewController {
     //MARK: Alert controllers
     
     func showGCDSuccessAlert(title: String, message: String){
+        
         activityIndicator.stopAnimating()
+        
         let allert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { _ in
             self.activityIndicator.startAnimating()
@@ -97,8 +101,10 @@ class ProfileViewController: UIViewController {
     }
     
     func showGCDAlertWithRetry(title: String, message: String, name: String?, description: String?, image: UIImage?){
+        
         activityIndicator.stopAnimating()
         enableButtons()
+        
         let allert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default)
         let retryAction = UIAlertAction(title: "Retry", style: .default) { _ in
@@ -111,7 +117,9 @@ class ProfileViewController: UIViewController {
     }
     
     func showOperationSuccessAlert(title: String, message: String){
+        
         activityIndicator.stopAnimating()
+        
         let allert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { _ in
             self.activityIndicator.startAnimating()
@@ -123,8 +131,10 @@ class ProfileViewController: UIViewController {
     }
     
     func showOperationAlertWithRetry(title: String, message: String, name: String?, description: String?, image: UIImage?){
+        
         activityIndicator.stopAnimating()
         enableButtons()
+        
         let allert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default)
         let retryAction = UIAlertAction(title: "Retry", style: .default) { _ in
@@ -294,24 +304,29 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
     
     func chooseImagePicker(source: UIImagePickerController.SourceType){
         if UIImagePickerController.isSourceTypeAvailable(source){
+            
             let imagePicker = UIImagePickerController()
+            
             imagePicker.delegate = self
             imagePicker.allowsEditing = true
             imagePicker.sourceType = source
+            
             present(imagePicker, animated: true)
         }
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
         profileImageView.image = info[.editedImage] as? UIImage
+        
         if !hasNameChanged && !hasDescriptionChanged && !hasImageChanged{
             enableSaveButtons()
         }
+        
         hasImageChanged = true
         profileImageView.contentMode = .scaleAspectFill
         profileImageView.clipsToBounds = true
-        
-        
+
         dismiss(animated: true)
     }
     
@@ -376,14 +391,17 @@ extension ProfileViewController: UITextFieldDelegate{
     }
     
     @objc private func textFieldChanged(){
+        
         if !hasNameChanged && !hasDescriptionChanged && !hasImageChanged{
             enableSaveButtons()
         }
+        
         hasNameChanged = true
+        
         if nameTextField.text?.count == 0{
             disableSaveButtons()
         } else {
-            enableButtons()
+            enableSaveButtons()
         }
     }
 }
@@ -393,9 +411,11 @@ extension ProfileViewController: UITextFieldDelegate{
 extension ProfileViewController: UITextViewDelegate{
     
     func textViewDidChange(_ textView: UITextView) {
+        
         if !hasNameChanged && !hasDescriptionChanged && !hasImageChanged{
             enableSaveButtons()
         }
+        
         hasDescriptionChanged = true
     }
 
@@ -409,6 +429,7 @@ extension ProfileViewController{
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+    
     func removeKeyboardNotification(){
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)

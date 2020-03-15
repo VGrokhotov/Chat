@@ -113,7 +113,7 @@ class OperationDataManager{
                 self.profileDescription = description
                 self.operationDataManager?.readsDone += 1
             }) 
-                
+            
         }
     }
     
@@ -148,9 +148,13 @@ class OperationDataManager{
     
     var successfullySaved = true {
         didSet{
+            
             if successfullySaved == false {
+                
                 let queue = OperationQueue.main
+                
                 queue.addOperation({
+                    
                     self.profileVC?.showOperationAlertWithRetry(
                         title: "Saving failed",
                         message: "Could not sava data",
@@ -158,7 +162,9 @@ class OperationDataManager{
                         description: self.saveDescriptionOperation?.profileDescription,
                         image: self.saveImageOperation?.profileImage)
                 })
+                
             }
+            
             successfullySaved = true
             savesDone = 0
             amountOfSaves = 0
@@ -166,15 +172,19 @@ class OperationDataManager{
     }
     var savesDone = 0 {
         didSet{
+            
             if savesDone == amountOfSaves{
                 
                 if successfullySaved {
+                    
                     let queue = OperationQueue.main
+                    
                     queue.addOperation({
                         self.profileVC?.showOperationSuccessAlert(title: "Successfully saved!", message: "All information changed successfully")
                     })
-                        
+                    
                 }
+                
                 savesDone = 0
                 amountOfSaves = 0
             }
@@ -185,13 +195,16 @@ class OperationDataManager{
     var readDescriptionOperation: ReadDescriptionOperation?
     var readImageOperation: ReadImageOperation?
     var isSaving = false
-
+    
     var amountOfReads = 0
     
     var readsDone = 0{
         didSet {
+            
             if readsDone == amountOfReads{
+                
                 let queue = OperationQueue.main
+                
                 queue.addOperation({
                     self.profileVC?.didSwitchToViewMode(
                         name: self.readNameOperation?.profileName,
@@ -200,7 +213,6 @@ class OperationDataManager{
                         isSaving: self.isSaving)
                 })
                 
-
                 readsDone = 0
                 amountOfReads = 0
             }
@@ -220,9 +232,11 @@ class OperationDataManager{
         operationQueue.qualityOfService = .userInteractive
         
         if profileVC?.hasNameChanged ?? true {
+            
             saveNameOperatiom = SaveNameOperation(name: name, dataManager: self)
             saveNameOperatiom?.qualityOfService = .userInteractive
             amountOfSaves += 1
+            
             if  let saveNameOperatiom = saveNameOperatiom {
                 operationQueue.addOperation(saveNameOperatiom)
             } else {
@@ -231,19 +245,24 @@ class OperationDataManager{
         }
         
         if profileVC?.hasDescriptionChanged ?? true{
+            
             saveDescriptionOperation = SaveDescriptionOperation(description: description, dataManager: self)
             saveDescriptionOperation?.qualityOfService = .userInteractive
             amountOfSaves += 1
+            
             if let saveDescriptionOperation = saveDescriptionOperation{
                 operationQueue.addOperation(saveDescriptionOperation)
             } else {
                 successfullySaved = false
             }
         }
+        
         if profileVC?.hasImageChanged ?? true{
+            
             saveImageOperation = SaveImageOperation(image: image, dataManager: self)
             saveImageOperation?.qualityOfService = .userInteractive
             amountOfSaves += 1
+            
             if let saveImageOperation = saveImageOperation {
                 operationQueue.addOperation(saveImageOperation)
             }  else {
@@ -256,7 +275,7 @@ class OperationDataManager{
     func readData( isSaving: Bool) {
         
         self.isSaving = isSaving
-
+        
         let operationQueue = OperationQueue()
         operationQueue.qualityOfService = .userInteractive
         
@@ -281,7 +300,7 @@ class OperationDataManager{
         operationQueue.addOperation(readImageOperation)
         operationQueue.addOperation(readDescriptionOperation)
         operationQueue.addOperation(readNameOperation)
-
+        
     }
     
     
@@ -339,10 +358,10 @@ class OperationDataManager{
             let fileURL = dir.appendingPathComponent(imageFile)
             
             do {
-//                enum MyError: Error {
-//                    case runtimeError(String)
-//                }
-//                throw MyError.runtimeError("l")
+                //                enum MyError: Error {
+                //                    case runtimeError(String)
+                //                }
+                //                throw MyError.runtimeError("l")
                 
                 try image.write(to: fileURL, options: .atomic)
                 comletion()
@@ -351,7 +370,7 @@ class OperationDataManager{
                 successfullySaved = false
             }
             
-        }else{
+        } else{
             successfullySaved = false
         }
         
