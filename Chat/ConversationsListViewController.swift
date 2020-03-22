@@ -7,15 +7,20 @@
 //
 
 import UIKit
+import Firebase
 
 class ConversationsListViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var cells: [[ConversationCellModel]] = StorageManager.cells()
+    private lazy var dataManager: DataManager = FirebaseDataManager(conversationsListViewController: self)
+    
+    var channels: [Channel]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        dataManager.getChannels()
 
         tableView.delegate = self
         tableView.dataSource = self
@@ -30,7 +35,13 @@ class ConversationsListViewController: UIViewController {
         present(destinationViewController, animated: true)
     }
     
-
+    @IBAction func createChannelButtonPressed(_ sender: Any) {
+        
+        let destinationViewController = NewChannelViewController.makeVC()
+        
+        navigationController?.pushViewController(destinationViewController, animated: true)
+    }
+    
 }
 
 //MARK: Work with table
@@ -39,10 +50,10 @@ extension ConversationsListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0{
-            return "Online"
+            return "Active"
         }
         else{
-            return "History"
+            return "Not Active"
         }
         
     }
@@ -55,7 +66,47 @@ extension ConversationsListViewController: UITableViewDelegate {
         
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let destinationViewController = ConversationViewController.makeVC(with: cells[indexPath.section][indexPath.row])
+        var currentChannel: Channel = Channel(identifier: "", name: "", lastMessage: "", lastActivity: Date())
+        
+        if indexPath.section == 0 {
+            var active = 0
+            for channel in channels ?? []{
+                if let lastActivity = channel.lastActivity{
+                    if Date().timeIntervalSince(lastActivity) < 600.0 {
+                        active += 1
+                        if indexPath.row == active - 1 {
+                            currentChannel = channel
+                            break
+                        }
+                    }
+                }
+            }
+        } else {
+            var notActive = 0
+            for channel in channels ?? []{
+                if let lastActivity = channel.lastActivity {
+                    if Date().timeIntervalSince(lastActivity) > 599.99999999 {
+                        notActive += 1
+                        if indexPath.row == notActive - 1 {
+                            currentChannel = channel
+                            break
+                        }
+                    }
+                } else {
+                    notActive += 1
+                    if indexPath.row == notActive - 1 {
+                        currentChannel = channel
+                        break
+                    }
+                }
+            }
+        }
+        
+        
+        let destinationViewController = ConversationViewController.makeVC(with: currentChannel, dataManager: dataManager)
+        
+        dataManager.addReference(with: destinationViewController)
+        
         navigationController?.pushViewController(destinationViewController, animated: true)
     }
 }
@@ -67,18 +118,72 @@ extension ConversationsListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cells[section].count
+        if section == 0 {
+            var active = 0
+            for channel in channels ?? []{
+                if let lastActivity = channel.lastActivity{
+                    if Date().timeIntervalSince(lastActivity) < 600.0 {
+                        active += 1
+                    }
+                }
+            }
+            return active
+        } else {
+            var notActive = 0
+            for channel in channels ?? []{
+                if let lastActivity = channel.lastActivity{
+                    if Date().timeIntervalSince(lastActivity) > 599.99999999 {
+                        notActive += 1
+                    }
+                } else {
+                    notActive += 1
+                }
+            }
+            return notActive
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let identifier = String(describing: ConversationCell.self)
         guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? ConversationCell else { return ConversationCell() }
         
-        cell.configure(with: cells[indexPath.section][indexPath.row])
-
-        return cell
+        
+        if indexPath.section == 0 {
+            var active = 0
+            for channel in channels ?? []{
+                if let lastActivity = channel.lastActivity{
+                    if Date().timeIntervalSince(lastActivity) < 600.0 {
+                        active += 1
+                        if indexPath.row == active - 1 {
+                            cell.configure(with: channel)
+                            return cell
+                        }
+                    }
+                }
+            }
+            return ConversationCell()
+        } else {
+            var notActive = 0
+            for channel in channels ?? []{
+                if let lastActivity = channel.lastActivity{
+                    if Date().timeIntervalSince(lastActivity) > 599.99999999 {
+                        notActive += 1
+                        if indexPath.row == notActive - 1 {
+                            cell.configure(with: channel)
+                            return cell
+                        }
+                    }
+                } else {
+                    notActive += 1
+                    if indexPath.row == notActive - 1 {
+                        cell.configure(with: channel)
+                        return cell
+                    }
+                }
+            }
+            return ConversationCell()
+        }
     }
-    
-    
 }
 

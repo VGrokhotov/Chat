@@ -17,7 +17,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="338" height="72"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="INr-Vr-XwO">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="INr-Vr-XwO">
                         <rect key="frame" x="20" y="5" width="42" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
@@ -29,7 +29,7 @@
                         <color key="textColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tab-Fu-pt9">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tab-Fu-pt9">
                         <rect key="frame" x="276" y="5" width="42" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -40,6 +40,7 @@
                     <constraint firstItem="GgX-dS-cki" firstAttribute="top" secondItem="INr-Vr-XwO" secondAttribute="bottom" constant="5" id="6gT-UZ-YJz"/>
                     <constraint firstItem="INr-Vr-XwO" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="7Uc-Rk-oUU"/>
                     <constraint firstItem="INr-Vr-XwO" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="Cny-Yv-vte"/>
+                    <constraint firstItem="tab-Fu-pt9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="INr-Vr-XwO" secondAttribute="trailing" constant="10" id="F7p-L0-OOW"/>
                     <constraint firstAttribute="trailing" secondItem="GgX-dS-cki" secondAttribute="trailing" constant="10" id="Fa9-6u-pM3"/>
                     <constraint firstItem="GgX-dS-cki" firstAttribute="top" secondItem="tab-Fu-pt9" secondAttribute="bottom" constant="5" id="So4-MH-Fru"/>
                     <constraint firstAttribute="bottom" secondItem="GgX-dS-cki" secondAttribute="bottom" constant="20" id="hkT-g2-9Z6"/>
@@ -50,7 +51,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="dateLable" destination="tab-Fu-pt9" id="xmj-k1-7aB"/>
+                <outlet property="dateLabel" destination="tab-Fu-pt9" id="xmj-k1-7aB"/>
                 <outlet property="messageLabel" destination="GgX-dS-cki" id="jFA-Qt-CUA"/>
                 <outlet property="nameLabel" destination="INr-Vr-XwO" id="LpJ-y3-skV"/>
             </connections>

@@ -8,56 +8,41 @@
 
 import UIKit
 import CoreData
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    var presentApplicationLifecycleLogs = false
 
     // MARK: Application Lifecycle
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        if presentApplicationLifecycleLogs{
-            print("Application moved from \"Not running\" state to \"Inactive\": \(#function)\n")
-        }
+
+        FirebaseApp.configure()
+        
         return true
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        if presentApplicationLifecycleLogs{
-            print("Application moved from \"Inactive\" state to \"Active\": \(#function)\n")
-            
-        }
+
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
-        if presentApplicationLifecycleLogs{
-            print("Application moved from \"Active\" state to \"Inactive\": \(#function)\n")
-            
-        }
+
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-        if presentApplicationLifecycleLogs{
-            print("Application moved from \"Inactive\" state to \"Background\": \(#function)\n")
-        }
+
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        if presentApplicationLifecycleLogs{
-            print("Application moved from \"Background\" state to \"Inactive\": \(#function)\n")
-            
-        }
+
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        if presentApplicationLifecycleLogs{
-            print("Application moved from \"Background\" state to \"Not running\": \(#function)\n")
-            
-        }
+
     }
 
 //    // MARK: - Core Data stack

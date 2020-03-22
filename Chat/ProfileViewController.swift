@@ -182,6 +182,9 @@ class ProfileViewController: UIViewController {
         operationButton.layer.borderWidth = 2.0
         operationButton.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         operationButton.clipsToBounds = true
+        
+        nameTextField.delegate = self
+        descriptionTextView.delegate = self
 
     }
     
@@ -438,9 +441,11 @@ extension ProfileViewController{
     @objc func keyboardWillShow(notification: NSNotification) {
         
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            
             if self.view.frame.origin.y == 0 {
                 self.view.frame.origin.y -= keyboardSize.height
             }
+            
         }
     }
 

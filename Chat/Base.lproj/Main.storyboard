@@ -47,9 +47,14 @@
                         <viewLayoutGuide key="safeArea" id="KbB-Ci-cod"/>
                     </view>
                     <navigationItem key="navigationItem" id="h75-78-GxP">
-                        <barButtonItem key="rightBarButtonItem" title="profile" image="user-1" style="done" id="qZn-d0-a0z">
+                        <barButtonItem key="leftBarButtonItem" title="profile" image="user-1" style="done" id="qZn-d0-a0z">
                             <connections>
                                 <action selector="profileButtonPressed:" destination="giI-GX-BL6" id="E3t-be-ozj"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="createChannel" image="plus" style="done" id="cM8-sq-Wiy">
+                            <connections>
+                                <action selector="createChannelButtonPressed:" destination="giI-GX-BL6" id="FTe-0v-Pgf"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -70,26 +75,121 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mFY-Q8-rm6">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="758"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7yj-sc-5Zo">
+                                <rect key="frame" x="0.0" y="802" width="414" height="60"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your message" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="20" translatesAutoresizingMaskIntoConstraints="NO" id="Q0Q-l4-g9F">
+                                        <rect key="frame" x="20" y="10" width="337" height="40"/>
+                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="20"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FIK-c3-Lur">
+                                        <rect key="frame" x="367" y="14" width="32" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="32" id="ZC5-yq-S5J"/>
+                                            <constraint firstAttribute="height" constant="32" id="r8d-AK-3SY"/>
+                                        </constraints>
+                                        <state key="normal" image="send">
+                                            <color key="titleColor" red="0.0" green="0.52941176470588236" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="sendButtonPressed:" destination="g7L-q9-2Ub" eventType="touchUpInside" id="tfo-hv-JRa"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="Q0Q-l4-g9F" firstAttribute="top" secondItem="7yj-sc-5Zo" secondAttribute="top" constant="10" id="10Q-b4-sz2"/>
+                                    <constraint firstItem="FIK-c3-Lur" firstAttribute="leading" secondItem="Q0Q-l4-g9F" secondAttribute="trailing" constant="10" id="De9-EA-s4j"/>
+                                    <constraint firstAttribute="bottom" secondItem="FIK-c3-Lur" secondAttribute="bottom" constant="14" id="YV9-eY-CVw"/>
+                                    <constraint firstItem="FIK-c3-Lur" firstAttribute="top" secondItem="7yj-sc-5Zo" secondAttribute="top" constant="14" id="dPe-Ys-q2Q"/>
+                                    <constraint firstAttribute="bottom" secondItem="Q0Q-l4-g9F" secondAttribute="bottom" constant="10" id="jxc-Km-b65"/>
+                                    <constraint firstAttribute="height" constant="60" id="nzR-0N-5nh"/>
+                                    <constraint firstItem="Q0Q-l4-g9F" firstAttribute="leading" secondItem="7yj-sc-5Zo" secondAttribute="leading" constant="20" id="pUu-lw-y6c"/>
+                                    <constraint firstAttribute="trailing" secondItem="FIK-c3-Lur" secondAttribute="trailing" constant="15" id="vQR-in-m80"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="mFY-Q8-rm6" firstAttribute="trailing" secondItem="dcN-QG-snl" secondAttribute="trailing" id="5N1-Kk-FgH"/>
-                            <constraint firstItem="mFY-Q8-rm6" firstAttribute="bottom" secondItem="dcN-QG-snl" secondAttribute="bottom" id="Q3a-9J-8Vg"/>
+                            <constraint firstItem="dcN-QG-snl" firstAttribute="bottom" secondItem="7yj-sc-5Zo" secondAttribute="bottom" id="6AB-aF-crE"/>
+                            <constraint firstItem="7yj-sc-5Zo" firstAttribute="top" secondItem="mFY-Q8-rm6" secondAttribute="bottom" id="D92-wq-Hll"/>
+                            <constraint firstItem="7yj-sc-5Zo" firstAttribute="trailing" secondItem="dcN-QG-snl" secondAttribute="trailing" id="Jvy-ap-xL0"/>
+                            <constraint firstItem="7yj-sc-5Zo" firstAttribute="leading" secondItem="dcN-QG-snl" secondAttribute="leading" id="Kdo-Dj-rto"/>
                             <constraint firstItem="mFY-Q8-rm6" firstAttribute="leading" secondItem="dcN-QG-snl" secondAttribute="leading" id="boI-ix-nao"/>
                             <constraint firstItem="mFY-Q8-rm6" firstAttribute="top" secondItem="dcN-QG-snl" secondAttribute="top" id="kr4-vs-NKn"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="dcN-QG-snl"/>
                     </view>
                     <connections>
+                        <outlet property="messageTextField" destination="Q0Q-l4-g9F" id="Z1k-yB-WID"/>
+                        <outlet property="sendButton" destination="FIK-c3-Lur" id="7Ie-Fg-3Be"/>
                         <outlet property="tableView" destination="mFY-Q8-rm6" id="hbH-sj-yeZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q17-wT-phK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="118.84057971014494" y="79.6875"/>
+        </scene>
+        <!--New Channel View Controller-->
+        <scene sceneID="7Fm-vq-3Ig">
+            <objects>
+                <viewController storyboardIdentifier="NewChannelViewController" id="QIV-aw-Wo9" customClass="NewChannelViewController" customModule="Chat" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pNQ-9z-AgN">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter new channel name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pwg-z0-3fP">
+                                <rect key="frame" x="20" y="378" width="268" height="30"/>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Channel name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iuy-iI-LYE">
+                                <rect key="frame" x="20" y="428" width="374" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Lgw-7f-C1w"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="25"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                            </textField>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P0D-W7-kNn">
+                                <rect key="frame" x="20" y="488" width="374" height="42"/>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="25"/>
+                                <state key="normal" title="Create">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="createButtonPressed:" destination="QIV-aw-Wo9" eventType="touchUpInside" id="ztA-F3-f97"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="iuy-iI-LYE" firstAttribute="top" secondItem="Pwg-z0-3fP" secondAttribute="bottom" constant="20" id="64e-UR-MO3"/>
+                            <constraint firstItem="iuy-iI-LYE" firstAttribute="centerY" secondItem="pNQ-9z-AgN" secondAttribute="centerY" id="9ms-ne-5Wj"/>
+                            <constraint firstItem="P0D-W7-kNn" firstAttribute="top" secondItem="iuy-iI-LYE" secondAttribute="bottom" constant="20" id="AKP-rb-nlH"/>
+                            <constraint firstItem="P0D-W7-kNn" firstAttribute="leading" secondItem="EQr-Ni-aXN" secondAttribute="leading" constant="20" id="Cdd-2n-5PV"/>
+                            <constraint firstItem="EQr-Ni-aXN" firstAttribute="trailing" secondItem="P0D-W7-kNn" secondAttribute="trailing" constant="20" id="D2V-fL-M47"/>
+                            <constraint firstItem="Pwg-z0-3fP" firstAttribute="leading" secondItem="EQr-Ni-aXN" secondAttribute="leading" constant="20" id="ZQz-gM-DTn"/>
+                            <constraint firstItem="EQr-Ni-aXN" firstAttribute="trailing" secondItem="iuy-iI-LYE" secondAttribute="trailing" constant="20" id="fz9-fc-dY6"/>
+                            <constraint firstItem="EQr-Ni-aXN" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Pwg-z0-3fP" secondAttribute="trailing" constant="10" id="jTZ-G8-195"/>
+                            <constraint firstItem="iuy-iI-LYE" firstAttribute="leading" secondItem="EQr-Ni-aXN" secondAttribute="leading" constant="20" id="yNd-Q3-pRM"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="EQr-Ni-aXN"/>
+                    </view>
+                    <connections>
+                        <outlet property="createButton" destination="P0D-W7-kNn" id="1wo-TN-mdm"/>
+                        <outlet property="newChannelNameTextField" destination="iuy-iI-LYE" id="SNB-IO-frJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jwL-q4-ZCJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="846" y="80"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -262,6 +362,8 @@
     <resources>
         <image name="Cancel" width="85.333335876464844" height="85.333335876464844"/>
         <image name="placeholder-user" width="300" height="300"/>
+        <image name="plus" width="33.333332061767578" height="33.333332061767578"/>
+        <image name="send" width="32" height="32"/>
         <image name="slr-camera-2-xxl" width="128" height="128"/>
         <image name="user-1" width="24" height="24"/>
     </resources>
