@@ -7,15 +7,13 @@
 //
 
 import UIKit
-import Firebase
 
 class NewChannelViewController: UIViewController {
     
     @IBOutlet weak var newChannelNameTextField: UITextField!
     @IBOutlet weak var createButton: UIButton!
     
-    private lazy var db = Firestore.firestore()
-    private lazy var reference = db.collection("channels")
+    private var dataManager: DataManager?
     
     
     @IBAction func createButtonPressed(_ sender: Any) {
@@ -26,16 +24,18 @@ class NewChannelViewController: UIViewController {
                               lastMessage: "",
                               lastActivity: nil)
         
-        reference.addDocument(data: channel.toDict)
+        dataManager?.createChannel(channel: channel)
         
         navigationController?.popViewController(animated: true)
     }
     
-    static func makeVC() -> NewChannelViewController {
+    static func makeVC(dataManager: DataManager) -> NewChannelViewController {
         let newViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: String(describing: NewChannelViewController.self)) as? NewChannelViewController
         
         guard let newVC = newViewController else {return NewChannelViewController()}
 
+        newVC.dataManager = dataManager
+        
         return newVC
     }
     

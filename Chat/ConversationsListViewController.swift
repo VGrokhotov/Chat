@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Firebase
 
 class ConversationsListViewController: UIViewController {
     
@@ -37,7 +36,7 @@ class ConversationsListViewController: UIViewController {
     
     @IBAction func createChannelButtonPressed(_ sender: Any) {
         
-        let destinationViewController = NewChannelViewController.makeVC()
+        let destinationViewController = NewChannelViewController.makeVC(dataManager: dataManager)
         
         navigationController?.pushViewController(destinationViewController, animated: true)
     }

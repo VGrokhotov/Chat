@@ -18,6 +18,8 @@ protocol DataManager{
     func sendMessage(message: Message)
     
     func addReference(with cVC: ConversationViewController)
+    
+    func createChannel(channel: Channel)
 }
 
 class FirebaseDataManager: DataManager{
@@ -133,6 +135,11 @@ class FirebaseDataManager: DataManager{
     func sendMessage(message: Message){
         messageReference.addDocument(data: message.toDict)
         cVC?.tableView.reloadData()
+    }
+    
+    func createChannel(channel: Channel){
+        channelsReference.addDocument(data: channel.toDict)
+        clVC?.tableView.reloadData()
     }
     
     
