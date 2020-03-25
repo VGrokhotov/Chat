@@ -99,13 +99,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="374" image="placeholder-user" translatesAutoresizingMaskIntoConstraints="NO" id="APB-Wu-jkM">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="374" image="placeholder-user" translatesAutoresizingMaskIntoConstraints="NO" id="APB-Wu-jkM">
                                 <rect key="frame" x="20" y="84" width="374" height="374"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="APB-Wu-jkM" secondAttribute="height" multiplier="1:1" id="wqp-xh-zEp"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="62.5" placeholderIntrinsicHeight="62.5" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="72N-GS-1vh">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="62.5" placeholderIntrinsicHeight="62.5" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="72N-GS-1vh">
                                 <rect key="frame" x="300.66666666666669" y="364.66666666666669" width="93.333333333333314" height="93.333333333333314"/>
                                 <color key="backgroundColor" red="0.2470588235" green="0.47058823529999999" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" image="slr-camera-2-xxl"/>
@@ -134,7 +134,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="JtG-Y7-jvE"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="BradleyHandITCTT-Bold" family="Bradley Hand" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
                                 <state key="normal" title="Редактировать">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
@@ -153,24 +153,87 @@
                                     <action selector="cancelProfile:" destination="BYZ-38-t0r" eventType="touchUpInside" id="C6s-LW-uNG"/>
                                 </connections>
                             </button>
+                            <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your name" minimumFontSize="20" translatesAutoresizingMaskIntoConstraints="NO" id="8nc-Yh-IcV">
+                                <rect key="frame" x="20" y="473" width="374" height="52"/>
+                                <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="27"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="WiR-IT-t7W"/>
+                                </connections>
+                            </textField>
+                            <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="249" verticalCompressionResistancePriority="749" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="207" text="f" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ZSx-Nr-PVF">
+                                <rect key="frame" x="20" y="535" width="374" height="207"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="18"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="wCr-BR-eMe"/>
+                                </connections>
+                            </textView>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OmM-gW-3Dv">
+                                <rect key="frame" x="20" y="752" width="374" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="F9b-KL-oFi"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                                <state key="normal" title="Operation">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="operationButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aDI-Gw-oBR"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AnM-w1-4zq">
+                                <rect key="frame" x="20" y="802" width="374" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="oOJ-FM-aQ3"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                                <state key="normal" title="GCD">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="GCDButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ja9-jk-vrf"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ySt-hV-HJv">
+                                <rect key="frame" x="197" y="463" width="20" height="20"/>
+                                <color key="color" cocoaTouchSystemColor="darkTextColor"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="ZSx-Nr-PVF" firstAttribute="top" secondItem="8nc-Yh-IcV" secondAttribute="bottom" constant="10" id="36W-Ay-hSn"/>
                             <constraint firstItem="72N-GS-1vh" firstAttribute="height" secondItem="APB-Wu-jkM" secondAttribute="height" multiplier="1:4" id="5FS-5h-xuf"/>
+                            <constraint firstItem="OmM-gW-3Dv" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="5N1-Bn-RJ7"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="OZm-SM-eet" secondAttribute="trailing" constant="20" id="6nW-9k-NIk"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Znv-mX-PPU" secondAttribute="trailing" constant="10" id="8CZ-hH-cmw"/>
+                            <constraint firstItem="8nc-Yh-IcV" firstAttribute="top" secondItem="APB-Wu-jkM" secondAttribute="bottom" constant="15" id="CNE-rg-Ihv"/>
                             <constraint firstItem="OZm-SM-eet" firstAttribute="top" relation="greaterThanOrEqual" secondItem="O9R-lE-Hen" secondAttribute="bottom" constant="10" id="DMf-If-cAs"/>
+                            <constraint firstItem="ZSx-Nr-PVF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="EMG-e7-289"/>
                             <constraint firstItem="Znv-mX-PPU" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="Gh3-nZ-2OO"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="APB-Wu-jkM" secondAttribute="trailing" constant="20" id="HAE-NO-cPU"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="O9R-lE-Hen" secondAttribute="trailing" constant="20" id="Lbl-hJ-gMP"/>
+                            <constraint firstItem="ySt-hV-HJv" firstAttribute="top" secondItem="APB-Wu-jkM" secondAttribute="bottom" constant="5" id="NeO-3J-W6g"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="OZm-SM-eet" secondAttribute="bottom" constant="20" id="QSJ-wq-Fnn"/>
+                            <constraint firstItem="AnM-w1-4zq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="RRs-b6-HN2"/>
+                            <constraint firstAttribute="trailing" secondItem="8nc-Yh-IcV" secondAttribute="trailing" constant="20" id="VcA-8H-JOP"/>
                             <constraint firstItem="OZm-SM-eet" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="WvV-dh-9G2"/>
                             <constraint firstItem="ecq-sX-PKn" firstAttribute="top" secondItem="APB-Wu-jkM" secondAttribute="bottom" constant="15" id="bab-XS-HUO"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="AnM-w1-4zq" secondAttribute="bottom" constant="20" id="cB4-tP-Qkk"/>
                             <constraint firstItem="72N-GS-1vh" firstAttribute="bottom" secondItem="APB-Wu-jkM" secondAttribute="bottom" id="dpJ-TI-LDv"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="AnM-w1-4zq" secondAttribute="trailing" constant="20" id="eSA-5D-MUb"/>
                             <constraint firstItem="72N-GS-1vh" firstAttribute="width" secondItem="APB-Wu-jkM" secondAttribute="width" multiplier="1:4" id="f96-BY-Xr1"/>
+                            <constraint firstItem="8nc-Yh-IcV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="fYZ-ox-HGg"/>
+                            <constraint firstItem="ySt-hV-HJv" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="h9G-Yd-vNI"/>
                             <constraint firstItem="ecq-sX-PKn" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="hpr-9a-8Zw"/>
                             <constraint firstItem="APB-Wu-jkM" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="lGr-Cg-Oq6"/>
                             <constraint firstItem="O9R-lE-Hen" firstAttribute="top" secondItem="ecq-sX-PKn" secondAttribute="bottom" constant="10" id="lPO-aC-AsD"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ZSx-Nr-PVF" secondAttribute="trailing" constant="20" id="oDD-Z6-4G7"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="OmM-gW-3Dv" secondAttribute="trailing" constant="20" id="od3-iS-E9c"/>
+                            <constraint firstItem="OmM-gW-3Dv" firstAttribute="top" secondItem="ZSx-Nr-PVF" secondAttribute="bottom" constant="10" id="p1D-gg-nVH"/>
+                            <constraint firstItem="AnM-w1-4zq" firstAttribute="top" secondItem="OmM-gW-3Dv" secondAttribute="bottom" constant="10" id="qot-d0-km1"/>
                             <constraint firstItem="APB-Wu-jkM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="rHE-mM-J7o"/>
                             <constraint firstItem="72N-GS-1vh" firstAttribute="trailing" secondItem="APB-Wu-jkM" secondAttribute="trailing" id="uj5-gK-llt"/>
                             <constraint firstItem="O9R-lE-Hen" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="wcK-KK-WFM"/>
@@ -179,16 +242,21 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="GCDButton" destination="AnM-w1-4zq" id="fAZ-GT-wHK"/>
+                        <outlet property="activityIndicator" destination="ySt-hV-HJv" id="GbP-O8-s5k"/>
                         <outlet property="choosePhotoButton" destination="72N-GS-1vh" id="ZTi-xO-PZ0"/>
                         <outlet property="descriptionLabel" destination="O9R-lE-Hen" id="Ktk-L4-4Qg"/>
+                        <outlet property="descriptionTextView" destination="ZSx-Nr-PVF" id="qBp-1s-VN4"/>
                         <outlet property="editButton" destination="OZm-SM-eet" id="RlX-7k-Vkc"/>
                         <outlet property="nameLabel" destination="ecq-sX-PKn" id="h55-K2-E0O"/>
+                        <outlet property="nameTextField" destination="8nc-Yh-IcV" id="a7b-h3-Xk9"/>
+                        <outlet property="operationButton" destination="OmM-gW-3Dv" id="82S-D8-fFd"/>
                         <outlet property="profileImageView" destination="APB-Wu-jkM" id="yNb-EY-Yyi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-609" y="78"/>
+            <point key="canvasLocation" x="-610.14492753623188" y="77.678571428571431"/>
         </scene>
     </scenes>
     <resources>
