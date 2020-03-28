@@ -9,34 +9,67 @@
 import UIKit
 import CoreData
 
-class StorageManager{
+protocol ProfileDataManager {
      
-     lazy var container: NSPersistentContainer = {
+     func saveData(name: String?, description: String?, imageData: Data?, hasNameChanged: Bool, hasDescriptionChanged: Bool, hasImageChanged: Bool)
+     
+     func readData() -> [Any?]
+     
+}
+
+class StorageManager: ProfileDataManager{
+
+     private lazy var container: NSPersistentContainer = {
+          
           let appDelegate = UIApplication.shared.delegate as? AppDelegate
+          
           if let appDelegate = appDelegate {
                return appDelegate.persistentContainer
           }
+          
           return NSPersistentContainer()
      }()
      
-     func save(name: String?, description: String?, imageData: Data?) {
+     func saveData(name: String?, description: String?, imageData: Data?, hasNameChanged: Bool, hasDescriptionChanged: Bool, hasImageChanged: Bool) {
+          
+          // I am sure that someyhing has changed because save button is not Active untill somthing changed
           container.performBackgroundTask { (context) in
                
                //to have only one entity
                let fetchRequest = NSFetchRequest<User>(entityName: "User")
                let allUsers = try? context.fetch(fetchRequest)
                if let allUsers = allUsers {
-                    for user in allUsers{
-                         if user != allUsers[allUsers.count-1] {
-                              context.delete(user)
+                    
+                    if allUsers.count > 0{
+                         
+                         for user in allUsers{
+                              if user != allUsers[allUsers.count-1] {
+                                   context.delete(user)
+                              }
                          }
+                         
+                         let user = allUsers.last
+                         
+                         if hasNameChanged {
+                              user?.userName = name
+                         }
+                         if hasDescriptionChanged{
+                              user?.userDescription = description
+                         }
+                         if hasImageChanged{
+                              user?.userImageData = imageData
+                         }
+                         
+                    } else {
+                         
+                         let user = NSEntityDescription.insertNewObject(forEntityName: "User", into: context) as? User
+                         
+                         user?.userName = name
+                         user?.userDescription = description
+                         user?.userImageData = imageData
+                         
                     }
                }
-               
-               let user = NSEntityDescription.insertNewObject(forEntityName: "User", into: context) as? User
-               user?.userName = name
-               user?.userDescription = description
-               user?.userImageData = imageData
                
                try? context.save()
           }
@@ -44,6 +77,7 @@ class StorageManager{
      
      
      func  readData() -> [Any?] {
+          
           var name: String?
           var description: String?
           var imageData: Data?
@@ -53,6 +87,7 @@ class StorageManager{
           //let allUsers = try? context.fetch(User.fetchRequest())
      
           let user = allUsers?.last
+          
           name = user?.userName
           description = user?.userDescription
           imageData = user?.userImageData
