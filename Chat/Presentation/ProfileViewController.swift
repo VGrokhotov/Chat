@@ -21,12 +21,14 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var operationButton: UIButton!
     @IBOutlet weak var GCDButton: UIButton!
+    @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     // MARK: - Vars and Lets
     
     var operationDataManager: OperationDataManager?
     var gcdDataManager: GCDDataManager?
+    var storageManager = StorageManager()
     
     var hasNameChanged = false
     var hasDescriptionChanged = false
@@ -73,6 +75,46 @@ class ProfileViewController: UIViewController {
         )
         
     }
+    
+    @IBAction func saveButtonPressed(_ sender: Any) {
+        
+        willSwitchToViewMode()
+        
+        storageManager.save(
+            name: nameTextField.text,
+            description: descriptionTextView.text,
+            imageData: profileImageView.image?.pngData()
+        )
+        
+//        nameLabel.text = storageManager.readName()
+//        descriptionLabel.text = storageManager.readDescription()
+//        profileImageView.image = UIImage(data: storageManager.readImageData())
+        
+        nameLabel.text = nameTextField.text
+        descriptionLabel.text = descriptionTextView.text
+        
+        
+        
+        hasNameChanged = false
+        hasDescriptionChanged = false
+        hasImageChanged = false
+        
+        activityIndicator.stopAnimating()
+        
+            show(view: nameLabel)
+            show(view: descriptionLabel)
+            show(view: editButton)
+            
+            hide(view: choosePhotoButton)
+            hide(view: nameTextField)
+            hide(view: descriptionTextView)
+            hide(view: operationButton)
+            hide(view: GCDButton)
+            hide(view: saveButton)
+
+        
+    }
+    
     
     //MARK: Satic func
     
@@ -159,7 +201,30 @@ class ProfileViewController: UIViewController {
         
         activityIndicator.startAnimating()
 
-        gcdDataManager?.readData(isSaving: false)
+        let data = storageManager.readData()
+        
+        if let name = data[0] as? String {
+            nameLabel.text = name
+        } else {
+            nameLabel.text = "Default"
+        }
+        
+        if let description = data[1] as? String {
+            descriptionLabel.text = description
+        } else {
+            descriptionLabel.text = "Default"
+        }
+        
+        if let imageData = data[2] as? Data{
+             profileImageView.image = UIImage(data: imageData)
+        } else {
+            profileImageView.image = #imageLiteral(resourceName: "placeholder-user")
+        }
+
+        activityIndicator.stopAnimating()
+        
+        
+        //gcdDataManager?.readData(isSaving: false)
         //operationDataManager?.readData(isSaving: false)
         
         setupToHideKeyboardOnTapOnView()
@@ -182,6 +247,11 @@ class ProfileViewController: UIViewController {
         operationButton.layer.borderWidth = 2.0
         operationButton.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         operationButton.clipsToBounds = true
+        
+        saveButton.layer.cornerRadius = 10
+        saveButton.layer.borderWidth = 2.0
+        saveButton.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        saveButton.clipsToBounds = true
         
         nameTextField.delegate = self
         descriptionTextView.delegate = self
@@ -230,22 +300,26 @@ extension ProfileViewController{
         operationButton.isEnabled = true
         GCDButton.isEnabled = true
         choosePhotoButton.isEnabled = true
+        saveButton.isEnabled = true
     }
     
     func disableButtons(){
         operationButton.isEnabled = false
         GCDButton.isEnabled = false
         choosePhotoButton.isEnabled = false
+        saveButton.isEnabled = false
     }
     
     func disableSaveButtons(){
         operationButton.isEnabled = false
         GCDButton.isEnabled = false
+        saveButton.isEnabled = false
     }
     
     func enableSaveButtons() {
         operationButton.isEnabled = true
         GCDButton.isEnabled = true
+        saveButton.isEnabled = true
     }
     
     func switchToEditting() {
@@ -264,6 +338,7 @@ extension ProfileViewController{
         show(view: descriptionTextView)
         show(view: operationButton)
         show(view: GCDButton)
+        show(view: saveButton)
     }
     
     func willSwitchToViewMode() {
@@ -294,6 +369,7 @@ extension ProfileViewController{
             hide(view: descriptionTextView)
             hide(view: operationButton)
             hide(view: GCDButton)
+            hide(view: saveButton)
 
         }
     }
