@@ -51,17 +51,27 @@ class ProfileViewController: UIViewController {
         
         willSwitchToViewMode()
         
+        saveData()
+        
+    }
+    
+    func saveData(){
+        
         storageManager.saveData(
             name: nameTextField.text,
             description: descriptionTextView.text,
             imageData: profileImageView.image?.pngData(),
             hasNameChanged: hasNameChanged,
             hasDescriptionChanged: hasDescriptionChanged,
-            hasImageChanged: hasImageChanged
+            hasImageChanged: hasImageChanged,
+            complition: { hasSaved in
+                if hasSaved {
+                    self.SuccessAlert(title: "Successfully saved!", message: "All information changed successfully")
+                } else {
+                    self.AlertWithRetry(title: "Saving failed", message: "Could not sava data")
+                }
+        }
         )
-        
-        didSwitchToViewMode()
-        
     }
     
     
@@ -77,6 +87,34 @@ class ProfileViewController: UIViewController {
     
     //MARK: Alert controllers
     
+    func SuccessAlert(title: String, message: String){
+        
+        activityIndicator.stopAnimating()
+        
+        let allert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+            self.didSwitchToViewMode()
+        }
+        
+        allert.addAction(okAction)
+        present(allert, animated: true)
+    }
+    
+    func AlertWithRetry(title: String, message: String){
+        
+        activityIndicator.stopAnimating()
+        enableButtons()
+        
+        let allert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default)
+        let retryAction = UIAlertAction(title: "Retry", style: .default) { _ in
+            self.saveData()
+        }
+        
+        allert.addAction(okAction)
+        allert.addAction(retryAction)
+        present(allert, animated: true)
+    }
     
     //MARK: View DidLoad
     

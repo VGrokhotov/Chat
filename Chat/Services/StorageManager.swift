@@ -11,7 +11,7 @@ import CoreData
 
 protocol ProfileDataManager {
      
-     func saveData(name: String?, description: String?, imageData: Data?, hasNameChanged: Bool, hasDescriptionChanged: Bool, hasImageChanged: Bool)
+     func saveData(name: String?, description: String?, imageData: Data?, hasNameChanged: Bool, hasDescriptionChanged: Bool, hasImageChanged: Bool, complition: @escaping (Bool) -> () )
      
      func readData() -> [Any?]
      
@@ -30,7 +30,7 @@ class StorageManager: ProfileDataManager{
           return NSPersistentContainer()
      }()
      
-     func saveData(name: String?, description: String?, imageData: Data?, hasNameChanged: Bool, hasDescriptionChanged: Bool, hasImageChanged: Bool) {
+     func saveData(name: String?, description: String?, imageData: Data?, hasNameChanged: Bool, hasDescriptionChanged: Bool, hasImageChanged: Bool, complition: @escaping (Bool) -> () ) {
           
           // I am sure that someyhing has changed because save button is not Active untill somthing changed
           container.performBackgroundTask { (context) in
@@ -70,8 +70,17 @@ class StorageManager: ProfileDataManager{
                          
                     }
                }
+               do {
+                    try context.save()
+                    DispatchQueue.main.async {
+                         complition(true)
+                    }
+               } catch {
+                    DispatchQueue.main.async {
+                         complition(false)
+                    }
+               }
                
-               try? context.save()
           }
      }
      
