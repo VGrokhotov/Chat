@@ -69,18 +69,23 @@ class StorageManager: ProfileDataManager{
                          user?.userImageData = imageData
                          
                     }
-               }
-               do {
-                    try context.save()
-                    DispatchQueue.main.async {
-                         complition(true)
+                    
+                    do {
+                         try context.save()
+                         DispatchQueue.main.async {
+                              complition(true)
+                         }
+                    } catch {
+                         DispatchQueue.main.async {
+                              complition(false)
+                         }
                     }
-               } catch {
+                    
+               } else {
                     DispatchQueue.main.async {
                          complition(false)
                     }
                }
-               
           }
      }
      
