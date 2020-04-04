@@ -16,10 +16,15 @@ class MessageObject: NSManagedObject {
     @NSManaged public var created: Date
     @NSManaged public var senderID: String
     @NSManaged public var senderName: String
+    @NSManaged public var channelIdentifier: String
         
     @nonobjc public class func fetchRequest() -> NSFetchRequest<MessageObject> {
         return NSFetchRequest<MessageObject>(entityName: "MessageObject");
     }
-    
+}
 
+extension MessageObject{
+    func toMessage() -> Message {
+        return Message(content: self.content, created: self.created, senderID: self.senderID, senderName: self.senderName)
+    }
 }

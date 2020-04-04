@@ -15,6 +15,7 @@ class ChannelObject: NSManagedObject {
     @NSManaged public var name: String
     @NSManaged public var lastMessage: String
     @NSManaged public var lastActivity: Date?
+    @NSManaged public var section: String
 
         
     @nonobjc public class func fetchRequest() -> NSFetchRequest<ChannelObject> {
@@ -22,4 +23,10 @@ class ChannelObject: NSManagedObject {
     }
     
 
+}
+
+extension ChannelObject{
+    func toChannel() -> Channel {
+        return Channel(identifier: self.identifier, name: self.name, lastMessage: self.lastMessage, lastActivity: self.lastActivity)
+    }
 }
