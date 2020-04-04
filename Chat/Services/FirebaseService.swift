@@ -11,15 +11,15 @@ import Firebase
 
 protocol DataManager{
     
-    func getChannels()
+    func getChannels(completion: @escaping ([Channel]) -> ())
     
-    func getMessages(channel: Channel)
+    func getMessages(channel: Channel, completion: @escaping ([Message]) -> ())
     
-    func sendMessage(message: Message)
+    func sendMessage(message: Message, completion: @escaping () -> ())
     
-    func addReference(with cVC: ConversationViewController)
+    func createChannel(channel: Channel, completion: @escaping () -> ())
     
-    func createChannel(channel: Channel)
+    var reloadCompletion: () -> ()  { get }
 }
 
 class FirebaseDataManager: DataManager{
@@ -35,25 +35,21 @@ class FirebaseDataManager: DataManager{
             return db.collection("channels").document(channelIdentifier).collection("messages")
     }
     
+    var reloadCompletion: () -> ()
+    
     var channel: Channel?
     
-    weak var clVC: ConversationsListViewController?
-    weak var cVC: ConversationViewController?
     
-    init(conversationsListViewController clVC: ConversationsListViewController) {
-        self.clVC = clVC
-    }
-    
-    func addReference(with cVC: ConversationViewController) {
-        self.cVC = cVC
+    init(channelsReloader: @escaping () -> ()) {
+        self.reloadCompletion = channelsReloader
     }
     
     
     
-    func getChannels() {
+    func getChannels(completion: @escaping ([Channel]) -> () ) {
         channelsReference.addSnapshotListener{ [weak self] snapshot, error in
             if let snapshot = snapshot{
-                self?.clVC?.channels = []
+                var channels = [Channel]()
                 for document in snapshot.documents{
                    
                     let name = document.data()["name"] as? String
@@ -65,7 +61,7 @@ class FirebaseDataManager: DataManager{
                         let  lastActivityPlusTenMinutes = lastActivity.addingTimeInterval(600)
                         if lastActivityPlusTenMinutes > Date(){
                             if let dataManager = self{
-                            let timer = Timer(fireAt: lastActivityPlusTenMinutes, interval: 0, target: dataManager, selector: #selector(self?.reloadChannelsTableWiew), userInfo: nil, repeats: false)
+                                let timer = Timer(fireAt: lastActivityPlusTenMinutes, interval: 0, target: dataManager, selector: #selector(self?.reloadChannelsTableView), userInfo: nil, repeats: false)
                                 RunLoop.main.add(timer, forMode: RunLoop.Mode.common)
                                 
                             }
@@ -74,9 +70,9 @@ class FirebaseDataManager: DataManager{
                     
                     let channel = Channel(identifier: document.documentID, name: name ?? "default", lastMessage: lastMessage ?? "new one", lastActivity: lastActivity)
                     
-                    self?.clVC?.channels?.append(channel)
+                    channels.append(channel)
                 }
-                self?.clVC?.channels?.sort(by: { (firstChannel, secondChannel) -> Bool in
+                channels.sort(by: { (firstChannel, secondChannel) -> Bool in
                     if let firstActivity = firstChannel.lastActivity{
                         if let secondActivity = secondChannel.lastActivity {
                             return firstActivity > secondActivity
@@ -94,52 +90,52 @@ class FirebaseDataManager: DataManager{
                     }
                     
                 })
-                self?.clVC?.tableView.reloadData()
+                completion(channels)
             }
         }
     }
     
-    @objc func reloadChannelsTableWiew() {
-        clVC?.tableView.reloadData()
+    @objc func reloadChannelsTableView() {
+        reloadCompletion()
     }
     
-    func getMessages(channel: Channel){
+    func getMessages(channel: Channel, completion: @escaping ([Message]) -> ()){
         self.channel = channel
         messageReference = messageReferenceFunc()
-        messageReference.addSnapshotListener { [weak self] snapshot, error in
+        messageReference.addSnapshotListener { snapshot, error in
             if let snapshot = snapshot{
-                self?.cVC?.messages = []
+                var messages = [Message]()
                 for document in snapshot.documents{
                    
                     let content = document.data()["content"] as? String
-                    let senderId = document.data()["senderID"] as? String
+                    let senderID = document.data()["senderID"] as? String
                     let createdData = document.data()["created"] as? Timestamp
                     let created = createdData?.dateValue()
                     let senderName = document.data()["senderName"] as? String
                     
-                    let message = Message(content: content ?? "Nil", created: created ?? Date.distantPast, senderId: senderId ?? "1", senderName: senderName ?? "Default")
+                    let message = Message(content: content ?? "Nil", created: created ?? Date.distantPast, senderID: senderID ?? "1", senderName: senderName ?? "Default")
                     
-                    self?.cVC?.messages?.append(message)
+                    messages.append(message)
                 }
                 
-                self?.cVC?.messages?.sort(by: { (firstMessage, secondMessage) -> Bool in
+                messages.sort(by: { (firstMessage, secondMessage) -> Bool in
                     return firstMessage.created < secondMessage.created
                     
                 })
                 
-                self?.cVC?.tableView.reloadData()
+                completion(messages)
             }
         }
     }
     
-    func sendMessage(message: Message){
+    func sendMessage(message: Message, completion: @escaping () -> ()){
         messageReference.addDocument(data: message.toDict)
-        cVC?.tableView.reloadData()
+        completion()
     }
     
-    func createChannel(channel: Channel){
+    func createChannel(channel: Channel, completion: @escaping () -> ()){
         channelsReference.addDocument(data: channel.toDict)
-        clVC?.tableView.reloadData()
+        completion()
     }
     
     

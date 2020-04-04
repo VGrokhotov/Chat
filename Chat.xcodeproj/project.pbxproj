@@ -19,6 +19,8 @@
 		864ED89E242FF45F00DD321F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864ED89D242FF45E00DD321F /* ProfileViewController.swift */; };
 		86514ED7242FA34E0060D62E /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86514ED6242FA34E0060D62E /* StorageManager.swift */; };
 		8673CF69240BA95900BFE738 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8673CF67240BA95900BFE738 /* MessageCell.swift */; };
+		86E19CD42438E37400F885B8 /* MessageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E19CD32438E37400F885B8 /* MessageObject.swift */; };
+		86E19CD62438E38F00F885B8 /* ChannelObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E19CD52438E38F00F885B8 /* ChannelObject.swift */; };
 		86EE099C23F9B91700D03091 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EE099B23F9B91700D03091 /* AppDelegate.swift */; };
 		86EE09A323F9B91700D03091 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86EE09A123F9B91700D03091 /* Main.storyboard */; };
 		86EE09A623F9B91700D03091 /* Chat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 86EE09A423F9B91700D03091 /* Chat.xcdatamodeld */; };
@@ -57,6 +59,8 @@
 		864ED89D242FF45E00DD321F /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		86514ED6242FA34E0060D62E /* StorageManager.swift */ = {isa = PBXFileReference; indentWidth = 5; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		8673CF67240BA95900BFE738 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		86E19CD32438E37400F885B8 /* MessageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageObject.swift; sourceTree = "<group>"; };
+		86E19CD52438E38F00F885B8 /* ChannelObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelObject.swift; sourceTree = "<group>"; };
 		86EE099823F9B91700D03091 /* Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		86EE099B23F9B91700D03091 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		86EE09A223F9B91700D03091 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -165,6 +169,8 @@
 				86FA8F2C2427AC9000BBE145 /* FirebaseService.swift */,
 				86514ED6242FA34E0060D62E /* StorageManager.swift */,
 				861C51D8242F9ABB0097D908 /* User.swift */,
+				86E19CD32438E37400F885B8 /* MessageObject.swift */,
+				86E19CD52438E38F00F885B8 /* ChannelObject.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -357,7 +363,9 @@
 				86294BC8240ADA94000638AA /* ConversationCell.swift in Sources */,
 				861C51D9242F9ABB0097D908 /* User.swift in Sources */,
 				86EE09A623F9B91700D03091 /* Chat.xcdatamodeld in Sources */,
+				86E19CD42438E37400F885B8 /* MessageObject.swift in Sources */,
 				86EE099C23F9B91700D03091 /* AppDelegate.swift in Sources */,
+				86E19CD62438E38F00F885B8 /* ChannelObject.swift in Sources */,
 				864ED898242FF45100DD321F /* ConversationViewController.swift in Sources */,
 				864ED89E242FF45F00DD321F /* ProfileViewController.swift in Sources */,
 				86514ED7242FA34E0060D62E /* StorageManager.swift in Sources */,
@@ -457,6 +465,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -510,6 +519,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = "";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";

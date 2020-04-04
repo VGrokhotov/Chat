@@ -12,14 +12,19 @@ class ConversationsListViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    private lazy var dataManager: DataManager = FirebaseDataManager(conversationsListViewController: self)
+    private lazy var dataManager: DataManager = FirebaseDataManager(channelsReloader: {
+        self.tableView.reloadData()
+    })
     
     var channels: [Channel]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        dataManager.getChannels()
+        dataManager.getChannels() { (channels) in
+            self.channels = channels
+            self.tableView.reloadData()
+        }
 
         tableView.delegate = self
         tableView.dataSource = self
@@ -39,6 +44,10 @@ class ConversationsListViewController: UIViewController {
         let destinationViewController = NewChannelViewController.makeVC(dataManager: dataManager)
         
         navigationController?.pushViewController(destinationViewController, animated: true)
+    }
+    
+    @objc func reloadChannelsTableView() {
+        tableView.reloadData()
     }
     
 }
@@ -103,8 +112,6 @@ extension ConversationsListViewController: UITableViewDelegate {
         
         
         let destinationViewController = ConversationViewController.makeVC(with: currentChannel, dataManager: dataManager)
-        
-        dataManager.addReference(with: destinationViewController)
         
         navigationController?.pushViewController(destinationViewController, animated: true)
     }

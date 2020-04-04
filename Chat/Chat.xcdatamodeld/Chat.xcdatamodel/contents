@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19D76" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="ChannelObject" representedClassName="ChannelObject" syncable="YES">
+        <attribute name="identifier" attributeType="String"/>
+        <attribute name="lastActivity" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="lastMessage" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+    </entity>
+    <entity name="MessageObject" representedClassName="MessageObject" syncable="YES">
+        <attribute name="content" attributeType="String"/>
+        <attribute name="created" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="senderID" optional="YES" attributeType="String"/>
+        <attribute name="senderName" attributeType="String"/>
+    </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="userDescription" optional="YES" attributeType="String"/>
         <attribute name="userImageData" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
@@ -7,5 +19,7 @@
     </entity>
     <elements>
         <element name="User" positionX="-63" positionY="-18" width="128" height="88"/>
+        <element name="ChannelObject" positionX="-63" positionY="9" width="128" height="103"/>
+        <element name="MessageObject" positionX="-54" positionY="36" width="128" height="103"/>
     </elements>
 </model>

@@ -46,7 +46,7 @@ class MessageCell: UITableViewCell, ConfigurableView {
         messageLabel.text = model.content
         
         
-        if (model.senderId != userId){
+        if (model.senderID != userId){
             messageView.backgroundColor = #colorLiteral(red: 0.8470765352, green: 0.8470765352, blue: 0.8470765352, alpha: 1)
 
             
@@ -89,7 +89,7 @@ class MessageCell: UITableViewCell, ConfigurableView {
 struct Message {
     let content: String
     let created: Date
-    let senderId: String
+    let senderID: String
     let senderName: String
 }
 
@@ -97,7 +97,7 @@ extension Message {
     var toDict: [String: Any] {
         return ["content": content,
                 "created": Timestamp(date: created),
-                "senderID": senderId,
+                "senderID": senderID,
                 "senderName": senderName]
     }
 }

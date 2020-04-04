@@ -27,9 +27,11 @@ class ConversationViewController: UIViewController {
     
     @IBAction func sendButtonPressed(_ sender: Any) {
         if let message = messageTextField.text {
-            let newMessage = Message(content: message, created: Date(), senderId: userId, senderName: userName)
+            let newMessage = Message(content: message, created: Date(), senderID: userId, senderName: userName)
             
-            dataManager?.sendMessage(message: newMessage)
+            dataManager?.sendMessage(message: newMessage){
+                self.tableView.reloadData()
+            }
             
             messageTextField.text = ""
             scrollDown(animated: true)
@@ -70,7 +72,10 @@ class ConversationViewController: UIViewController {
         registerForKeyboardNotification()
         
         if let channel = channel{
-            dataManager?.getMessages(channel: channel)
+            dataManager?.getMessages(channel: channel){ messages in
+                self.messages = messages
+                self.tableView.reloadData()
+            }
         }
         
         tableView.delegate = self
