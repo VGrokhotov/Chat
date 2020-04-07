@@ -19,14 +19,12 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var operationButton: UIButton!
-    @IBOutlet weak var GCDButton: UIButton!
+    @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     // MARK: - Vars and Lets
     
-    var operationDataManager: OperationDataManager?
-    var gcdDataManager: GCDDataManager?
+    var storageManager: ProfileDataManager = StorageManager()
     
     var hasNameChanged = false
     var hasDescriptionChanged = false
@@ -48,31 +46,34 @@ class ProfileViewController: UIViewController {
     @IBAction func editButtonPressed(_ sender: Any) {
         switchToEditting()
     }
-    
-    
-    @IBAction func operationButtonPressed(_ sender: Any) {
+
+    @IBAction func saveButtonPressed(_ sender: Any) {
         
         willSwitchToViewMode()
         
-        operationDataManager?.saveAndShowData(
-            name: nameTextField.text,
-            description: descriptionTextView.text,
-            image: profileImageView.image
-        )
+        saveData()
         
     }
     
-    @IBAction func GCDButtonPressed(_ sender: Any) {
+    func saveData(){
         
-        willSwitchToViewMode()
-        
-        gcdDataManager?.saveAndShowData(
+        storageManager.saveData(
             name: nameTextField.text,
             description: descriptionTextView.text,
-            image: profileImageView.image
+            imageData: profileImageView.image?.pngData(),
+            hasNameChanged: hasNameChanged,
+            hasDescriptionChanged: hasDescriptionChanged,
+            hasImageChanged: hasImageChanged,
+            complition: { hasSaved in
+                if hasSaved {
+                    self.SuccessAlert(title: "Successfully saved!", message: "All information changed successfully")
+                } else {
+                    self.AlertWithRetry(title: "Saving failed", message: "Could not sava data")
+                }
+        }
         )
-        
     }
+    
     
     //MARK: Satic func
     
@@ -86,21 +87,20 @@ class ProfileViewController: UIViewController {
     
     //MARK: Alert controllers
     
-    func showGCDSuccessAlert(title: String, message: String){
+    func SuccessAlert(title: String, message: String){
         
         activityIndicator.stopAnimating()
         
         let allert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { _ in
-            self.activityIndicator.startAnimating()
-            self.gcdDataManager?.readData(isSaving: true)
+            self.didSwitchToViewMode()
         }
         
         allert.addAction(okAction)
         present(allert, animated: true)
     }
     
-    func showGCDAlertWithRetry(title: String, message: String, name: String?, description: String?, image: UIImage?){
+    func AlertWithRetry(title: String, message: String){
         
         activityIndicator.stopAnimating()
         enableButtons()
@@ -108,59 +108,44 @@ class ProfileViewController: UIViewController {
         let allert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default)
         let retryAction = UIAlertAction(title: "Retry", style: .default) { _ in
-            self.gcdDataManager?.saveAndShowData(name: name, description: description, image: image)
+            self.saveData()
         }
         
         allert.addAction(okAction)
         allert.addAction(retryAction)
         present(allert, animated: true)
     }
-    
-    func showOperationSuccessAlert(title: String, message: String){
-        
-        activityIndicator.stopAnimating()
-        
-        let allert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
-            self.activityIndicator.startAnimating()
-            self.operationDataManager?.readData(isSaving: true)
-        }
-        
-        allert.addAction(okAction)
-        present(allert, animated: true)
-    }
-    
-    func showOperationAlertWithRetry(title: String, message: String, name: String?, description: String?, image: UIImage?){
-        
-        activityIndicator.stopAnimating()
-        enableButtons()
-        
-        let allert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default)
-        let retryAction = UIAlertAction(title: "Retry", style: .default) { _ in
-            self.operationDataManager?.saveAndShowData(name: name, description: description, image: image)
-        }
-        
-        allert.addAction(okAction)
-        allert.addAction(retryAction)
-        present(allert, animated: true)
-    }
-    
     
     //MARK: View DidLoad
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        gcdDataManager = GCDDataManager(profileVC: self)
-        operationDataManager = OperationDataManager(profileVC: self)
-        
         profileImageView.contentMode = .scaleAspectFill
         
         activityIndicator.startAnimating()
 
-        gcdDataManager?.readData(isSaving: false)
-        //operationDataManager?.readData(isSaving: false)
+        let data = storageManager.readData()
+        
+        if let name = data[0] as? String {
+            nameLabel.text = name
+        } else {
+            nameLabel.text = "Default"
+        }
+        
+        if let description = data[1] as? String {
+            descriptionLabel.text = description
+        } else {
+            descriptionLabel.text = "Default"
+        }
+        
+        if let imageData = data[2] as? Data{
+             profileImageView.image = UIImage(data: imageData)
+        } else {
+            profileImageView.image = #imageLiteral(resourceName: "placeholder-user")
+        }
+
+        activityIndicator.stopAnimating()
         
         setupToHideKeyboardOnTapOnView()
         
@@ -173,15 +158,13 @@ class ProfileViewController: UIViewController {
         editButton.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         editButton.clipsToBounds = true
         
-        GCDButton.layer.cornerRadius = 10
-        GCDButton.layer.borderWidth = 2.0
-        GCDButton.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        GCDButton.clipsToBounds = true
+        saveButton.layer.cornerRadius = 10
+        saveButton.layer.borderWidth = 2.0
+        saveButton.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        saveButton.clipsToBounds = true
         
-        operationButton.layer.cornerRadius = 10
-        operationButton.layer.borderWidth = 2.0
-        operationButton.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        operationButton.clipsToBounds = true
+        nameTextField.delegate = self
+        descriptionTextView.delegate = self
 
     }
     
@@ -224,25 +207,21 @@ extension ProfileViewController{
     }
     
     func enableButtons() {
-        operationButton.isEnabled = true
-        GCDButton.isEnabled = true
         choosePhotoButton.isEnabled = true
+        saveButton.isEnabled = true
     }
     
     func disableButtons(){
-        operationButton.isEnabled = false
-        GCDButton.isEnabled = false
         choosePhotoButton.isEnabled = false
+        saveButton.isEnabled = false
     }
     
     func disableSaveButtons(){
-        operationButton.isEnabled = false
-        GCDButton.isEnabled = false
+        saveButton.isEnabled = false
     }
     
     func enableSaveButtons() {
-        operationButton.isEnabled = true
-        GCDButton.isEnabled = true
+        saveButton.isEnabled = true
     }
     
     func switchToEditting() {
@@ -259,8 +238,7 @@ extension ProfileViewController{
         show(view: choosePhotoButton)
         show(view: nameTextField)
         show(view: descriptionTextView)
-        show(view: operationButton)
-        show(view: GCDButton)
+        show(view: saveButton)
     }
     
     func willSwitchToViewMode() {
@@ -268,11 +246,10 @@ extension ProfileViewController{
         activityIndicator.startAnimating()
     }
     
-    func didSwitchToViewMode(name: String?, description: String?, image: UIImage?, isSaving: Bool){
+    func didSwitchToViewMode(){
         
-        profileImageView.image = image
-        nameLabel.text = name
-        descriptionLabel.text = description
+        nameLabel.text = nameTextField.text
+        descriptionLabel.text = descriptionTextView.text
         
         hasNameChanged = false
         hasDescriptionChanged = false
@@ -280,19 +257,15 @@ extension ProfileViewController{
         
         activityIndicator.stopAnimating()
         
-        if isSaving {
+        show(view: nameLabel)
+        show(view: descriptionLabel)
+        show(view: editButton)
         
-            show(view: nameLabel)
-            show(view: descriptionLabel)
-            show(view: editButton)
-            
-            hide(view: choosePhotoButton)
-            hide(view: nameTextField)
-            hide(view: descriptionTextView)
-            hide(view: operationButton)
-            hide(view: GCDButton)
+        hide(view: choosePhotoButton)
+        hide(view: nameTextField)
+        hide(view: descriptionTextView)
+        hide(view: saveButton)
 
-        }
     }
     
 }
@@ -438,9 +411,11 @@ extension ProfileViewController{
     @objc func keyboardWillShow(notification: NSNotification) {
         
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            
             if self.view.frame.origin.y == 0 {
                 self.view.frame.origin.y -= keyboardSize.height
             }
+            
         }
     }
 

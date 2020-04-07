@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import Firebase
 
 class ConversationCell: UITableViewCell{
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
-    @IBOutlet weak var dateLable: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    
+    var channel: Channel?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,31 +30,34 @@ class ConversationCell: UITableViewCell{
 }
 
 extension ConversationCell: ConfigurableView{
-    typealias ConfigurationModel = ConversationCellModel
+    typealias ConfigurationModel = Channel
     
-    func configure(with model: ConversationCellModel){
+    func configure(with model: Channel){
+        
+        channel = model
         
         nameLabel.text = model.name
         
-        if model.isOnline{
-            self.backgroundColor =  #colorLiteral(red: 1, green: 1, blue: 0.9012467894, alpha: 1)
+        if let lastActivity = model.lastActivity {
+            if Date().timeIntervalSince(lastActivity) < 600.0{
+                self.backgroundColor =  #colorLiteral(red: 1, green: 1, blue: 0.9012467894, alpha: 1)
+            } else{
+                self.backgroundColor =  #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            }
         } else{
             self.backgroundColor =  #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         }
         
-        if let message = model.message{
-            messageLabel.text = message
-            messageLabel.font = UIFont.systemFont(ofSize: 17)
-        } else{
-            messageLabel.text = "No messages yet"
-            messageLabel.font = UIFont(name: "AppleSDGothicNeo-Light", size: 17)
-        }
+        
+        messageLabel.text = model.lastMessage
+        messageLabel.font = UIFont.systemFont(ofSize: 17)
         
         
-        if let date = model.date {
+        if let date = model.lastActivity{
+            
             let today = Date() // сегодня
             let calendar = Calendar.current
-            
+                
             let date0 = Calendar.current.startOfDay(for: today)//now 00:00
             let dateFormatterPrint = DateFormatter()
 
@@ -64,11 +70,9 @@ extension ConversationCell: ConfigurableView{
             } else{
                 dateFormatterPrint.dateFormat = "HH:mm"
             }
-            dateLable.text = dateFormatterPrint.string(from: date)
-        }
-        
-        if model.hasUnreadMessages{
-            messageLabel.font = UIFont.boldSystemFont(ofSize: 18)
+            dateLabel.text = dateFormatterPrint.string(from: date)
+        } else {
+            dateLabel.text = nil
         }
         
     }
@@ -76,19 +80,27 @@ extension ConversationCell: ConfigurableView{
     
 }
 
-
-struct ConversationCellModel {
-    
-    let name: String
-    let message: String?
-    let date: Date?
-    let isOnline: Bool
-    let hasUnreadMessages: Bool
-}
-
 protocol ConfigurableView {
     
     associatedtype ConfigurationModel
     
     func configure(with model: ConfigurationModel)
+}
+
+
+struct Channel {
+    let identifier: String
+    let name: String
+    let lastMessage: String
+    let lastActivity: Date?
+}
+
+extension Channel {
+    var toDict: [String: Any] {
+        if let date = lastActivity {
+            return ["name": name,
+                    "lastActivity": Timestamp(date: date)]
+        }
+        return ["name": name]
+    }
 }

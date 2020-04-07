@@ -21,39 +21,69 @@
                         <rect key="frame" x="10" y="7" width="62" height="96"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jT1-qh-8Ve">
-                                <rect key="frame" x="10" y="7" width="42" height="82"/>
+                                <rect key="frame" x="10" y="32" width="42" height="39"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BVK-Ti-YwN">
+                                <rect key="frame" x="10" y="7" width="42" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="aEw-km-jao"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lnr-PQ-OG3">
+                                <rect key="frame" x="25.5" y="74" width="31.5" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="17" id="vF1-2c-u1s"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="0.84707655536529669" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="jT1-qh-8Ve" secondAttribute="trailing" constant="10" id="9W2-AD-1nl"/>
-                            <constraint firstAttribute="bottom" secondItem="jT1-qh-8Ve" secondAttribute="bottom" constant="7" id="GEj-XJ-MRD"/>
+                            <constraint firstItem="BVK-Ti-YwN" firstAttribute="leading" secondItem="Tu9-l9-VTJ" secondAttribute="leading" constant="10" id="21H-Y9-XEJ"/>
+                            <constraint firstAttribute="trailing" secondItem="BVK-Ti-YwN" secondAttribute="trailing" constant="10" id="CmG-14-zAJ"/>
+                            <constraint firstItem="lnr-PQ-OG3" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Tu9-l9-VTJ" secondAttribute="leading" constant="10" id="DK8-Ox-wjV"/>
+                            <constraint firstItem="BVK-Ti-YwN" firstAttribute="top" secondItem="Tu9-l9-VTJ" secondAttribute="top" constant="7" id="DXy-yd-C6N"/>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="Gtc-aw-L9K"/>
+                            <constraint firstItem="lnr-PQ-OG3" firstAttribute="top" secondItem="jT1-qh-8Ve" secondAttribute="bottom" constant="3" id="HOO-aS-3rx"/>
                             <constraint firstItem="jT1-qh-8Ve" firstAttribute="leading" secondItem="Tu9-l9-VTJ" secondAttribute="leading" constant="10" id="Nb9-b1-hA1"/>
-                            <constraint firstItem="jT1-qh-8Ve" firstAttribute="top" secondItem="Tu9-l9-VTJ" secondAttribute="top" constant="7" id="kSY-ao-bbd"/>
+                            <constraint firstAttribute="bottom" secondItem="lnr-PQ-OG3" secondAttribute="bottom" constant="5" id="SZP-sh-WhN"/>
+                            <constraint firstAttribute="trailing" secondItem="lnr-PQ-OG3" secondAttribute="trailing" constant="5" id="Y5K-oK-hPI"/>
+                            <constraint firstAttribute="trailing" secondItem="jT1-qh-8Ve" secondAttribute="trailing" constant="10" id="mWk-rl-k3N"/>
+                            <constraint firstItem="jT1-qh-8Ve" firstAttribute="top" secondItem="BVK-Ti-YwN" secondAttribute="bottom" constant="5" id="mkD-cJ-fJw"/>
                         </constraints>
                     </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Tu9-l9-VTJ" firstAttribute="width" relation="lessThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="3:4" id="CC7-lf-u8J"/>
-                    <constraint firstItem="Tu9-l9-VTJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" placeholder="YES" id="RyG-D3-E6u"/>
+                    <constraint firstItem="Tu9-l9-VTJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="7" id="De1-gp-4Zd"/>
+                    <constraint firstItem="Tu9-l9-VTJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="RyG-D3-E6u"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Tu9-l9-VTJ" secondAttribute="trailing" constant="60" id="aHC-OR-fSo"/>
                     <constraint firstAttribute="bottom" secondItem="Tu9-l9-VTJ" secondAttribute="bottom" constant="7" id="hqx-cj-JYS"/>
-                    <constraint firstItem="Tu9-l9-VTJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="7" id="j7I-n4-VbV"/>
+                    <constraint firstAttribute="trailing" secondItem="Tu9-l9-VTJ" secondAttribute="trailing" constant="10" id="j8W-bn-nGJ"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
                         <exclude reference="aHC-OR-fSo"/>
+                        <exclude reference="j8W-bn-nGJ"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="dateLabel" destination="lnr-PQ-OG3" id="QZQ-2e-c7d"/>
+                <outlet property="leftConstraint" destination="RyG-D3-E6u" id="9Yc-VF-UZv"/>
                 <outlet property="messageLabel" destination="jT1-qh-8Ve" id="FYK-35-h74"/>
                 <outlet property="messageView" destination="Tu9-l9-VTJ" id="Y9S-4b-a9o"/>
+                <outlet property="rightConstraint" destination="j8W-bn-nGJ" id="idI-cw-Kg9"/>
+                <outlet property="senderName" destination="BVK-Ti-YwN" id="L0d-XI-H4c"/>
             </connections>
             <point key="canvasLocation" x="-76.08695652173914" y="81.696428571428569"/>
         </tableViewCell>
