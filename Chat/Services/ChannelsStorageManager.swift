@@ -10,28 +10,27 @@ import UIKit
 import CoreData
 
 protocol ChannelsDataManager {
-     
+    
     func saveChannels(channels: [Channel], completion: @escaping () -> ())
-    func readChannels()
     
     var controller: NSFetchedResultsController<ChannelObject> {get}
 }
 
 class ChannelsStorageManager: ChannelsDataManager{
-
-     private lazy var container: NSPersistentContainer = {
-          
-          let appDelegate = UIApplication.shared.delegate as? AppDelegate
-          
-          if let appDelegate = appDelegate {
-               return appDelegate.persistentContainer
-          }
-          
-          return NSPersistentContainer()
-     }()
     
-    
+    private lazy var container: NSPersistentContainer = {
         
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        
+        if let appDelegate = appDelegate {
+            return appDelegate.persistentContainer
+        }
+        
+        return NSPersistentContainer()
+    }()
+    
+    
+    
     lazy var controller: NSFetchedResultsController<ChannelObject> = {
         
         let dateSort = NSSortDescriptor(key: "lastActivity", ascending: false)
@@ -47,23 +46,11 @@ class ChannelsStorageManager: ChannelsDataManager{
         
         return fetchedResultsController
     }()
-     
-     
-     
-     func readChannels(){
-
-          let dateSort = NSSortDescriptor(key: "lastActivity", ascending: false)
-          
-          let fetchRequest = NSFetchRequest<ChannelObject>(entityName: "ChannelObject")
-          fetchRequest.sortDescriptors = [dateSort]
-          
-          //let allChannels = try? container.viewContext.fetch(fetchRequest)
-          
-     }
-     
-     func saveChannels(channels: [Channel], completion: @escaping () -> ()) {
+    
+    
+    func saveChannels(channels: [Channel], completion: @escaping () -> ()) {
         container.performBackgroundTask { (context) in
-
+            
             let fetchRequest = NSFetchRequest<ChannelObject>(entityName: "ChannelObject")
             guard let allChannels = try? context.fetch(fetchRequest) else {return}
             
@@ -80,7 +67,7 @@ class ChannelsStorageManager: ChannelsDataManager{
                         break
                     }
                 }
-
+                
                 if let _ = currentChannelObject {
                     //
                 } else {
@@ -106,5 +93,5 @@ class ChannelsStorageManager: ChannelsDataManager{
             try? context.save()
             completion()
         }
-     }
+    }
 }

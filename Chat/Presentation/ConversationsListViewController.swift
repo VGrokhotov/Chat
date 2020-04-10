@@ -25,6 +25,8 @@ class ConversationsListViewController: UIViewController {
         super.viewDidLoad()
         
         storageManager.controller.delegate = self
+        try? storageManager.controller.performFetch()
+        tableView.reloadData()
         
         readDataFromDBAndSaveToCoreData()
 

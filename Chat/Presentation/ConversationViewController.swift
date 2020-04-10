@@ -58,6 +58,8 @@ class ConversationViewController: UIViewController {
         super.viewDidLoad()
         
         storageManager.controller.delegate = self
+        try? storageManager.controller.performFetch()
+        tableView.reloadData()
 
         if let topItem = navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
