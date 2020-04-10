@@ -82,17 +82,10 @@ class MessagesStorageManager: MessagesDataManager{
             for message in messages{
                 var currentMessageObject: MessageObject?
                 
-                var matches = 0
-                
-                //to have only one instatnce of message
                 for messageObject in channelMessages{
                     if message.created == messageObject.created{
-                        matches += 1
-                        if matches == 1{
-                            currentMessageObject = messageObject
-                        } else {
-                            context.delete(messageObject)
-                        }
+                        currentMessageObject = messageObject
+                        break
                     }
                 }
                 

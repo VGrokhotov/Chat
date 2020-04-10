@@ -17,7 +17,7 @@
 		864ED89A242FF45500DD321F /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 864ED899242FF45500DD321F /* MessageCell.xib */; };
 		864ED89C242FF45B00DD321F /* NewChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864ED89B242FF45B00DD321F /* NewChannelViewController.swift */; };
 		864ED89E242FF45F00DD321F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864ED89D242FF45E00DD321F /* ProfileViewController.swift */; };
-		86514ED7242FA34E0060D62E /* PrifileStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86514ED6242FA34E0060D62E /* PrifileStorageManager.swift */; };
+		86514ED7242FA34E0060D62E /* ProfileStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86514ED6242FA34E0060D62E /* ProfileStorageManager.swift */; };
 		8673CF69240BA95900BFE738 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8673CF67240BA95900BFE738 /* MessageCell.swift */; };
 		8698039C243F90FD00763871 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8698039B243F90FD00763871 /* GoogleService-Info.plist */; };
 		86C00C6B2440A30400F0A543 /* MessagesStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C00C6A2440A30400F0A543 /* MessagesStorageManager.swift */; };
@@ -59,7 +59,7 @@
 		864ED899242FF45500DD321F /* MessageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
 		864ED89B242FF45B00DD321F /* NewChannelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewChannelViewController.swift; sourceTree = "<group>"; };
 		864ED89D242FF45E00DD321F /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		86514ED6242FA34E0060D62E /* PrifileStorageManager.swift */ = {isa = PBXFileReference; indentWidth = 5; lastKnownFileType = sourcecode.swift; path = PrifileStorageManager.swift; sourceTree = "<group>"; };
+		86514ED6242FA34E0060D62E /* ProfileStorageManager.swift */ = {isa = PBXFileReference; indentWidth = 5; lastKnownFileType = sourcecode.swift; path = ProfileStorageManager.swift; sourceTree = "<group>"; };
 		8673CF67240BA95900BFE738 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		8698039B243F90FD00763871 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		86C00C6A2440A30400F0A543 /* MessagesStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesStorageManager.swift; sourceTree = "<group>"; };
@@ -169,7 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				86FA8F2C2427AC9000BBE145 /* FirebaseService.swift */,
-				86514ED6242FA34E0060D62E /* PrifileStorageManager.swift */,
+				86514ED6242FA34E0060D62E /* ProfileStorageManager.swift */,
 				861C51D8242F9ABB0097D908 /* User.swift */,
 				86C00C6A2440A30400F0A543 /* MessagesStorageManager.swift */,
 				86E19CD32438E37400F885B8 /* MessageObject.swift */,
@@ -375,7 +375,7 @@
 				86E19CD62438E38F00F885B8 /* ChannelObject.swift in Sources */,
 				864ED898242FF45100DD321F /* ConversationViewController.swift in Sources */,
 				864ED89E242FF45F00DD321F /* ProfileViewController.swift in Sources */,
-				86514ED7242FA34E0060D62E /* PrifileStorageManager.swift in Sources */,
+				86514ED7242FA34E0060D62E /* ProfileStorageManager.swift in Sources */,
 				864ED89C242FF45B00DD321F /* NewChannelViewController.swift in Sources */,
 				863615942439465600B18D27 /* ChannelsStorageManager.swift in Sources */,
 			);

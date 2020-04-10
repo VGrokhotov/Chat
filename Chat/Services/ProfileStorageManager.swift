@@ -17,7 +17,7 @@ protocol ProfileDataManager {
      
 }
 
-class PrifileStorageManager: ProfileDataManager{
+class ProfileStorageManager: ProfileDataManager{
 
      private lazy var container: NSPersistentContainer = {
           
