@@ -11,9 +11,10 @@ import CoreData
 
 protocol ChannelsDataManager {
      
-    func saveChannels(channels: [Channel], complition: @escaping () -> ())
+    func saveChannels(channels: [Channel], completion: @escaping () -> ())
     func readChannels()
-     
+    
+    var controller: NSFetchedResultsController<ChannelObject> {get}
 }
 
 class ChannelsStorageManager: ChannelsDataManager{
@@ -28,6 +29,24 @@ class ChannelsStorageManager: ChannelsDataManager{
           
           return NSPersistentContainer()
      }()
+    
+    
+        
+    lazy var controller: NSFetchedResultsController<ChannelObject> = {
+        
+        let dateSort = NSSortDescriptor(key: "lastActivity", ascending: false)
+        let sectionSort = NSSortDescriptor(key: "section", ascending: true)
+        let fetchRequest = NSFetchRequest<ChannelObject>(entityName: "ChannelObject")
+        fetchRequest.sortDescriptors = [sectionSort, dateSort]
+        
+        let fetchedResultsController = NSFetchedResultsController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: container.viewContext,
+            sectionNameKeyPath: "section",
+            cacheName: nil)
+        
+        return fetchedResultsController
+    }()
      
      
      
@@ -42,33 +61,57 @@ class ChannelsStorageManager: ChannelsDataManager{
           
      }
      
-     func saveChannels(channels: [Channel], complition: @escaping () -> ()) {
+     func saveChannels(channels: [Channel], completion: @escaping () -> ()) {
         container.performBackgroundTask { (context) in
-            
-//            print(channels.count)
-            //to have only one entity
+
             let fetchRequest = NSFetchRequest<ChannelObject>(entityName: "ChannelObject")
-            let allChannels = try? context.fetch(fetchRequest)
-            //print(allChannels?.count)
-            if let allChannels = allChannels {
-                 if allChannels.count > 0{
-                      for channel in allChannels{
-                        context.delete(channel)
-                      }
-                 }
+            guard let allChannels = try? context.fetch(fetchRequest) else {return}
+
+            for channel in allChannels{
+                print(channel.toChannel())
             }
+            
+            print(channels.count)
+            print(allChannels.count)
+            
+            var deleted = Array(repeating: true, count: allChannels.count)
+            
             for channel in channels{
-                let channelObject = NSEntityDescription.insertNewObject(forEntityName: "ChannelObject", into: context) as? ChannelObject
                 
-                channelObject?.identifier = channel.identifier
-                channelObject?.lastMessage = channel.lastMessage
-                channelObject?.lastActivity = channel.lastActivity
-                channelObject?.name = channel.name
-                channelObject?.section = "Not Active"
+                var currentChannelObject: ChannelObject?
+                
+                for i in 0..<(allChannels.count){
+                    if channel.identifier == allChannels[i].identifier{
+                        currentChannelObject = allChannels[i]
+                        deleted[i] = false
+                        break
+                    }
+                }
+
+                if let _ = currentChannelObject {
+                    //
+                } else {
+                    currentChannelObject = NSEntityDescription.insertNewObject(forEntityName: "ChannelObject", into: context) as? ChannelObject
+                }
+                
+                
+                
+                currentChannelObject?.identifier = channel.identifier
+                currentChannelObject?.lastMessage = channel.lastMessage
+                currentChannelObject?.lastActivity = channel.lastActivity
+                currentChannelObject?.name = channel.name
+                currentChannelObject?.section = channel.section
+                
+            }
+            
+            for i in 0..<deleted.count {
+                if deleted[i] {
+                    context.delete(allChannels[i])
+                }
             }
             
             try? context.save()
-            complition()
+            completion()
         }
      }
 }

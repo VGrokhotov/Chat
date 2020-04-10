@@ -17,47 +17,16 @@ class ConversationsListViewController: UIViewController {
         self.tableView.reloadData()
     })
     
-    var channels: [Channel]?
-    
     var storageManager: ChannelsDataManager = ChannelsStorageManager()
+
     
-    var fetchedResultsController : NSFetchedResultsController<ChannelObject>?
-    private lazy var container: NSPersistentContainer = {
-         
-         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-         
-         if let appDelegate = appDelegate {
-              return appDelegate.persistentContainer
-         }
-         
-         return NSPersistentContainer()
-    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let dateSort = NSSortDescriptor(key: "lastActivity", ascending: false)
-        let fetchRequest = NSFetchRequest<ChannelObject>(entityName: "ChannelObject")
-        fetchRequest.sortDescriptors = [dateSort]
-        fetchedResultsController = NSFetchedResultsController(
-            fetchRequest: fetchRequest,
-            managedObjectContext: container.viewContext,
-            sectionNameKeyPath: "section",
-            cacheName: nil)
-        try? fetchedResultsController?.performFetch()
-        fetchedResultsController?.delegate = self
+        storageManager.controller.delegate = self
         
-        dataManager.getChannels() { (channels) in
-            //self.channels = channels
-            
-            self.storageManager.saveChannels(channels: channels) {
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            }
-            //self.tableView.reloadData()
-            
-        }
+        readDataFromDBAndSaveToCoreData()
 
         tableView.delegate = self
         tableView.dataSource = self
@@ -79,6 +48,18 @@ class ConversationsListViewController: UIViewController {
         navigationController?.pushViewController(destinationViewController, animated: true)
     }
     
+    func readDataFromDBAndSaveToCoreData(){
+        dataManager.getChannels() { (channels) in
+            
+            self.storageManager.saveChannels(channels: channels) {
+                DispatchQueue.main.async {
+                    try? self.storageManager.controller.performFetch()
+                    self.tableView.reloadData()
+                }
+            }
+        }
+    }
+    
 }
 
 //MARK: Work with table
@@ -86,13 +67,8 @@ class ConversationsListViewController: UIViewController {
 extension ConversationsListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0{
-            return "Active"
-        }
-        else{
-            return "Not Active"
-        }
-        
+        guard let sections = storageManager.controller.sections else { return "" }
+        return sections[section].name
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -103,143 +79,36 @@ extension ConversationsListViewController: UITableViewDelegate {
         
         tableView.deselectRow(at: indexPath, animated: true)
         
-        var currentChannel: Channel = Channel(identifier: "", name: "", lastMessage: "", lastActivity: Date())
+        let channelObject = storageManager.controller.object(at: indexPath)
+        let channel = channelObject.toChannel()
         
-        if indexPath.section == 0 {
-            var active = 0
-            for channel in channels ?? []{
-                if let lastActivity = channel.lastActivity{
-                    if Date().timeIntervalSince(lastActivity) < 600.0 {
-                        active += 1
-                        if indexPath.row == active - 1 {
-                            currentChannel = channel
-                            break
-                        }
-                    }
-                }
-            }
-        } else {
-            var notActive = 0
-            for channel in channels ?? []{
-                if let lastActivity = channel.lastActivity {
-                    if Date().timeIntervalSince(lastActivity) > 599.99999999 {
-                        notActive += 1
-                        if indexPath.row == notActive - 1 {
-                            currentChannel = channel
-                            break
-                        }
-                    }
-                } else {
-                    notActive += 1
-                    if indexPath.row == notActive - 1 {
-                        currentChannel = channel
-                        break
-                    }
-                }
-            }
-        }
-        
-        
-        let destinationViewController = ConversationViewController.makeVC(with: currentChannel, dataManager: dataManager)
+        let destinationViewController = ConversationViewController.makeVC(with: channel, dataManager: dataManager)
         
         navigationController?.pushViewController(destinationViewController, animated: true)
     }
 }
 
 extension ConversationsListViewController: UITableViewDataSource {
-    
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return 2
-//    }
-//    
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if section == 0 {
-//            var active = 0
-//            for channel in channels ?? []{
-//                if let lastActivity = channel.lastActivity{
-//                    if Date().timeIntervalSince(lastActivity) < 600.0 {
-//                        active += 1
-//                    }
-//                }
-//            }
-//            return active
-//        } else {
-//            var notActive = 0
-//            for channel in channels ?? []{
-//                if let lastActivity = channel.lastActivity{
-//                    if Date().timeIntervalSince(lastActivity) > 599.99999999 {
-//                        notActive += 1
-//                    }
-//                } else {
-//                    notActive += 1
-//                }
-//            }
-//            return notActive
-//        }
-//        
-//    }
-//    
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let identifier = String(describing: ConversationCell.self)
-//        guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? ConversationCell else { return ConversationCell() }
-//        
-//        
-//        if indexPath.section == 0 {
-//            var active = 0
-//            for channel in channels ?? []{
-//                if let lastActivity = channel.lastActivity{
-//                    if Date().timeIntervalSince(lastActivity) < 600.0 {
-//                        active += 1
-//                        if indexPath.row == active - 1 {
-//                            cell.configure(with: channel)
-//                            return cell
-//                        }
-//                    }
-//                }
-//            }
-//            return ConversationCell()
-//        } else {
-//            var notActive = 0
-//            for channel in channels ?? []{
-//                if let lastActivity = channel.lastActivity{
-//                    if Date().timeIntervalSince(lastActivity) > 599.99999999 {
-//                        notActive += 1
-//                        if indexPath.row == notActive - 1 {
-//                            cell.configure(with: channel)
-//                            return cell
-//                        }
-//                    }
-//                } else {
-//                    notActive += 1
-//                    if indexPath.row == notActive - 1 {
-//                        cell.configure(with: channel)
-//                        return cell
-//                    }
-//                }
-//            }
-//            return ConversationCell()
-//        }
-//    }
-    
+        
     func numberOfSections(in tableView: UITableView) -> Int {
-        guard let sections = fetchedResultsController?.sections else { return 0 }
+        guard let sections = storageManager.controller.sections else { return 0 }
         return sections.count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sections = fetchedResultsController?.sections else { return 0 }
+        guard let sections = storageManager.controller.sections else { return 0 }
         return sections[section].numberOfObjects
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let channelObject = fetchedResultsController?.object(at: indexPath)
+        let channelObject = storageManager.controller.object(at: indexPath)
         
         let identifier = String(describing: ConversationCell.self)
         guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? ConversationCell else { return ConversationCell() }
         
         
-        guard let channel = channelObject?.toChannel() else { return ConversationCell() }
+        let channel = channelObject.toChannel()
         cell.configure(with: channel)
         
         return cell
@@ -266,9 +135,9 @@ extension ConversationsListViewController: NSFetchedResultsControllerDelegate{
         
         switch type {
         case .insert:
-            tableView.insertSections(NSIndexSet(index: sectionIndex) as IndexSet, with: .fade)
+            tableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
         case .delete:
-            tableView.deleteSections(NSIndexSet(index: sectionIndex) as IndexSet, with: .fade)
+            tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
         default:
             return
         }
@@ -284,26 +153,26 @@ extension ConversationsListViewController: NSFetchedResultsControllerDelegate{
         
         switch type {
         case .insert:
-            if let indexPath = newIndexPath {
-                tableView.insertRows(at: [indexPath], with: .automatic)
+            if let newIndexPath = newIndexPath {
+                tableView.insertRows(at: [newIndexPath], with: .fade)
             }
         case .update:
             if let indexPath = indexPath {
-                let channelObject = fetchedResultsController?.object(at: indexPath)
+                let channelObject = storageManager.controller.object(at: indexPath)
                 guard let cell = tableView.cellForRow(at: indexPath) as? ConversationCell else { break }
-                guard let channel = channelObject?.toChannel() else { return }
+                let channel = channelObject.toChannel()
                 cell.configure(with: channel)
             }
         case .move:
             if let indexPath = indexPath {
-                tableView.deleteRows(at: [indexPath], with: .automatic)
+                tableView.deleteRows(at: [indexPath], with: .fade)
             }
             if let newIndexPath = newIndexPath {
-                tableView.insertRows(at: [newIndexPath], with: .automatic)
+                tableView.insertRows(at: [newIndexPath], with: .fade)
             }
         case .delete:
             if let indexPath = indexPath {
-                tableView.deleteRows(at: [indexPath], with: .automatic)
+                tableView.deleteRows(at: [indexPath], with: .fade)
             }
         default:
             break

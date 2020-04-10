@@ -14,7 +14,7 @@ class ChannelObject: NSManagedObject {
     @NSManaged public var identifier: String
     @NSManaged public var name: String
     @NSManaged public var lastMessage: String
-    @NSManaged public var lastActivity: Date?
+    @NSManaged public var lastActivity: Date? 
     @NSManaged public var section: String
 
         
@@ -27,6 +27,6 @@ class ChannelObject: NSManagedObject {
 
 extension ChannelObject{
     func toChannel() -> Channel {
-        return Channel(identifier: self.identifier, name: self.name, lastMessage: self.lastMessage, lastActivity: self.lastActivity)
+        return Channel(identifier: self.identifier, name: self.name, lastMessage: self.lastMessage, lastActivity: self.lastActivity, section: self.section)
     }
 }

@@ -56,40 +56,27 @@ class FirebaseDataManager: DataManager{
                     let lastMessage = document.data()["lastMessage"] as? String
                     let lastActivityData = document.data()["lastActivity"] as? Timestamp
                     let lastActivity = lastActivityData?.dateValue()
+                    var section: String?
                     
                     if let lastActivity = lastActivity{
                         let  lastActivityPlusTenMinutes = lastActivity.addingTimeInterval(600)
                         if lastActivityPlusTenMinutes > Date(){
+                            section = "Active"
                             if let dataManager = self{
                                 let timer = Timer(fireAt: lastActivityPlusTenMinutes, interval: 0, target: dataManager, selector: #selector(self?.reloadChannelsTableView), userInfo: nil, repeats: false)
                                 RunLoop.main.add(timer, forMode: RunLoop.Mode.common)
                                 
                             }
+                        } else {
+                            section = "Not Active"
                         }
                     }
                     
-                    let channel = Channel(identifier: document.documentID, name: name ?? "default", lastMessage: lastMessage ?? "new one", lastActivity: lastActivity)
+                    let channel = Channel(identifier: document.documentID, name: name ?? "default", lastMessage: lastMessage ?? "new one", lastActivity: lastActivity, section: section ?? "Unknown")
                     
                     channels.append(channel)
                 }
-                channels.sort(by: { (firstChannel, secondChannel) -> Bool in
-                    if let firstActivity = firstChannel.lastActivity{
-                        if let secondActivity = secondChannel.lastActivity {
-                            return firstActivity > secondActivity
-                        }
-                        else {
-                            return true
-                        }
-                    } else {
-                        if let _ = secondChannel.lastActivity {
-                            return false
-                        }
-                        else {
-                            return true
-                        }
-                    }
-                    
-                })
+
                 completion(channels)
             }
         }

@@ -34,6 +34,7 @@ class ConversationViewController: UIViewController {
             }
             
             messageTextField.text = ""
+            sendButton.isEnabled = false
             scrollDown(animated: true)
         }
     }
