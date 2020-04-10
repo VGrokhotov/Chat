@@ -26,7 +26,7 @@ class NewChannelViewController: UIViewController {
                               section: "")
         
         dataManager?.createChannel(channel: channel) {
-            self.dataManager?.reloadCompletion()
+            self.dataManager?.channelsReloadCompletion()
         }
         
         navigationController?.popViewController(animated: true)

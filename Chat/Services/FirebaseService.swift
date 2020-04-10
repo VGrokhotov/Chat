@@ -19,7 +19,7 @@ protocol DataManager{
     
     func createChannel(channel: Channel, completion: @escaping () -> ())
     
-    var reloadCompletion: () -> ()  { get }
+    var channelsReloadCompletion: () -> ()  { get }
 }
 
 class FirebaseDataManager: DataManager{
@@ -35,13 +35,13 @@ class FirebaseDataManager: DataManager{
             return db.collection("channels").document(channelIdentifier).collection("messages")
     }
     
-    var reloadCompletion: () -> ()
+    var channelsReloadCompletion: () -> ()
     
     var channel: Channel?
     
     
     init(channelsReloader: @escaping () -> ()) {
-        self.reloadCompletion = channelsReloader
+        self.channelsReloadCompletion = channelsReloader
     }
     
     
@@ -83,7 +83,7 @@ class FirebaseDataManager: DataManager{
     }
     
     @objc func reloadChannelsTableView() {
-        reloadCompletion()
+        channelsReloadCompletion()
     }
     
     func getMessages(channel: Channel, completion: @escaping ([Message]) -> ()){
@@ -100,15 +100,15 @@ class FirebaseDataManager: DataManager{
                     let created = createdData?.dateValue()
                     let senderName = document.data()["senderName"] as? String
                     
-                    let message = Message(content: content ?? "Nil", created: created ?? Date.distantPast, senderID: senderID ?? "1", senderName: senderName ?? "Default")
+                    let message = Message(content: content ?? "Nil", created: created ?? Date.distantPast, senderID: senderID ?? "1", senderName: senderName ?? "Default", channelIdentifier: channel.identifier)
                     
                     messages.append(message)
                 }
                 
-                messages.sort(by: { (firstMessage, secondMessage) -> Bool in
-                    return firstMessage.created < secondMessage.created
-                    
-                })
+//                messages.sort(by: { (firstMessage, secondMessage) -> Bool in
+//                    return firstMessage.created < secondMessage.created
+//
+//                })
                 
                 completion(messages)
             }

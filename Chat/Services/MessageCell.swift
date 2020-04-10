@@ -91,6 +91,7 @@ struct Message {
     let created: Date
     let senderID: String
     let senderName: String
+    let channelIdentifier: String
 }
 
 extension Message {

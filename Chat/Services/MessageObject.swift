@@ -25,6 +25,6 @@ class MessageObject: NSManagedObject {
 
 extension MessageObject{
     func toMessage() -> Message {
-        return Message(content: self.content, created: self.created, senderID: self.senderID, senderName: self.senderName)
+        return Message(content: self.content, created: self.created, senderID: self.senderID, senderName: self.senderName, channelIdentifier: self.channelIdentifier)
     }
 }

@@ -66,13 +66,6 @@ class ChannelsStorageManager: ChannelsDataManager{
 
             let fetchRequest = NSFetchRequest<ChannelObject>(entityName: "ChannelObject")
             guard let allChannels = try? context.fetch(fetchRequest) else {return}
-
-            for channel in allChannels{
-                print(channel.toChannel())
-            }
-            
-            print(channels.count)
-            print(allChannels.count)
             
             var deleted = Array(repeating: true, count: allChannels.count)
             
