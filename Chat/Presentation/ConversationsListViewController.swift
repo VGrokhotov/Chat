@@ -60,7 +60,19 @@ class ConversationsListViewController: UIViewController {
         }
     }
     
+    //MARK: Alerts
+
+    func errorAlert(title: String, message: String){
+        
+        let allert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default)
+        allert.addAction(okAction)
+        
+        present(allert, animated: true)
+    }
+    
 }
+
 
 //MARK: Work with table
 
@@ -85,6 +97,20 @@ extension ConversationsListViewController: UITableViewDelegate {
         let destinationViewController = ConversationViewController.makeVC(with: channel, dataManager: dataManager)
         
         navigationController?.pushViewController(destinationViewController, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let channel = storageManager.controller.object(at: indexPath)
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {  (_, _, _) in
+            self.dataManager.deleteChannel(channel: channel.toChannel()) { (errorMessage) in
+                DispatchQueue.main.async {
+                    self.errorAlert(title: "Deleting error", message: errorMessage)
+                }
+            }
+        }
+        return UISwipeActionsConfiguration(actions: [deleteAction])
+        
     }
 }
 

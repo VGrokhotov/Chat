@@ -20,6 +20,8 @@ protocol DataManager{
     func createChannel(channel: Channel, completion: @escaping () -> ())
     
     var channelsReloadCompletion: () -> ()  { get }
+    
+    func deleteChannel(channel: Channel, errorCompletion: @escaping (String) -> ())
 }
 
 class FirebaseDataManager: DataManager{
@@ -105,11 +107,6 @@ class FirebaseDataManager: DataManager{
                     messages.append(message)
                 }
                 
-//                messages.sort(by: { (firstMessage, secondMessage) -> Bool in
-//                    return firstMessage.created < secondMessage.created
-//
-//                })
-                
                 completion(messages)
             }
         }
@@ -125,5 +122,12 @@ class FirebaseDataManager: DataManager{
         completion()
     }
     
+    func deleteChannel(channel: Channel, errorCompletion: @escaping (String) -> ()) {
+        channelsReference.document(channel.identifier).delete { (error) in
+            if let error = error{
+                errorCompletion(error.localizedDescription)
+            }
+        }
+    }
     
 }
