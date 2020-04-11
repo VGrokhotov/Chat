@@ -57,8 +57,8 @@ class ConversationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        storageManager.controller.delegate = self
-        try? storageManager.controller.performFetch()
+        storageManager.setDelegat(viewController: self)
+        storageManager.fetch()
         tableView.reloadData()
 
         if let topItem = navigationController?.navigationBar.topItem {
@@ -93,7 +93,7 @@ class ConversationViewController: UIViewController {
                 
                 self.storageManager.saveMessages(messages: messages){
                     DispatchQueue.main.async {
-                        try? self.storageManager.controller.performFetch()
+                        self.storageManager.fetch()
                         self.tableView.reloadData()
                         self.scrollDown(animated: false)
                     }
@@ -123,7 +123,7 @@ extension ConversationViewController: UITableViewDelegate {
     //To scroll down the table
     
     func scrollDown(animated: Bool){
-        guard let amountOfMessages =  storageManager.controller.fetchedObjects?.count else { return }
+        guard let amountOfMessages =  storageManager.amountOfMessages() else { return }
         
         if amountOfMessages > 0 {
             let lastIndex = IndexPath(row: amountOfMessages - 1, section: 0)
@@ -137,23 +137,20 @@ extension ConversationViewController: UITableViewDelegate {
 extension ConversationViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        guard let sections = storageManager.controller.sections else { return 0 }
-        return sections.count
+        return storageManager.numberOfSections()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sections = storageManager.controller.sections else { return 0 }
-        return sections[section].numberOfObjects
+        return storageManager.numberOfRowsIn(section: section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let messageObject = storageManager.controller.object(at: indexPath)
+        let message = storageManager.object(at: indexPath)
         
         let identifier = String(describing: MessageCell.self)
         guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? MessageCell else { return MessageCell() }
         
-        let message = messageObject.toMessage()
         cell.configure(with: message)
         
         return cell
@@ -205,9 +202,8 @@ extension ConversationViewController: NSFetchedResultsControllerDelegate{
             }
         case .update:
             if let indexPath = indexPath {
-                let messageObject = storageManager.controller.object(at: indexPath)
+                let message = storageManager.object(at: indexPath)
                 guard let cell = tableView.cellForRow(at: indexPath) as? MessageCell else { break }
-                let message = messageObject.toMessage()
                 cell.configure(with: message)
             }
         case .move:

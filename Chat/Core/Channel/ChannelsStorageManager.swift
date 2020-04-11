@@ -13,7 +13,18 @@ protocol ChannelsDataManager {
     
     func saveChannels(channels: [Channel], completion: @escaping () -> ())
     
-    var controller: NSFetchedResultsController<ChannelObject> {get}
+    func object(at: IndexPath) -> Channel
+    
+    func fetch()
+    
+    func sectionName(section: Int) -> String
+    
+    func numberOfSections() -> Int
+    
+    func numberOfRowsIn(section: Int) -> Int
+    
+    func setDelegat(viewController: UIViewController)
+    
 }
 
 class ChannelsStorageManager: ChannelsDataManager{
@@ -93,5 +104,29 @@ class ChannelsStorageManager: ChannelsDataManager{
             try? context.save()
             completion()
         }
+    }
+    
+    func object(at indexPath: IndexPath) -> Channel {
+        return controller.object(at: indexPath).toChannel()
+    }
+    
+    func fetch() {
+        try? controller.performFetch()
+    }
+    
+    func sectionName(section: Int) -> String {
+        return controller.sections?[section].name ?? ""
+    }
+    
+    func numberOfSections() -> Int {
+        return controller.sections?.count ?? 0
+    }
+    
+    func numberOfRowsIn(section: Int) -> Int {
+        return controller.sections?[section].numberOfObjects ?? 0
+    }
+    
+    func setDelegat(viewController: UIViewController) {
+        controller.delegate = viewController as? NSFetchedResultsControllerDelegate
     }
 }

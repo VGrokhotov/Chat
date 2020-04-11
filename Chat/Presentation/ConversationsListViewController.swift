@@ -24,8 +24,8 @@ class ConversationsListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        storageManager.controller.delegate = self
-        try? storageManager.controller.performFetch()
+        storageManager.setDelegat(viewController: self)
+        storageManager.fetch()
         tableView.reloadData()
         
         readDataFromDBAndSaveToCoreData()
@@ -55,7 +55,7 @@ class ConversationsListViewController: UIViewController {
             
             self.storageManager.saveChannels(channels: channels) {
                 DispatchQueue.main.async {
-                    try? self.storageManager.controller.performFetch()
+                    self.storageManager.fetch()
                     self.tableView.reloadData()
                 }
             }
@@ -81,8 +81,7 @@ class ConversationsListViewController: UIViewController {
 extension ConversationsListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let sections = storageManager.controller.sections else { return "" }
-        return sections[section].name
+        return storageManager.sectionName(section: section)
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -93,8 +92,7 @@ extension ConversationsListViewController: UITableViewDelegate {
         
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let channelObject = storageManager.controller.object(at: indexPath)
-        let channel = channelObject.toChannel()
+        let channel = storageManager.object(at: indexPath)
         
         let destinationViewController = ConversationViewController.makeVC(with: channel, dataManager: dataManager)
         
@@ -103,13 +101,13 @@ extension ConversationsListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        let channel = storageManager.controller.object(at: indexPath)
+        let channel = storageManager.object(at: indexPath)
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {  (_, _, _) in
             let comletion = {
                 let messageDataManager: MessagesDataManager = MessagesStorageManager(channelIdentifier: channel.identifier)
                 messageDataManager.deleteMessagesForChannel()
             }
-            self.dataManager.deleteChannel(channel: channel.toChannel(), completion: comletion) { (errorMessage) in
+            self.dataManager.deleteChannel(channel: channel, completion: comletion) { (errorMessage) in
                 DispatchQueue.main.async {
                     self.errorAlert(title: "Deleting error", message: errorMessage)
                 }
@@ -123,24 +121,20 @@ extension ConversationsListViewController: UITableViewDelegate {
 extension ConversationsListViewController: UITableViewDataSource {
         
     func numberOfSections(in tableView: UITableView) -> Int {
-        guard let sections = storageManager.controller.sections else { return 0 }
-        return sections.count
+        return storageManager.numberOfSections()
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sections = storageManager.controller.sections else { return 0 }
-        return sections[section].numberOfObjects
+        return storageManager.numberOfRowsIn(section: section)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let channelObject = storageManager.controller.object(at: indexPath)
+        let channel = storageManager.object(at: indexPath)
         
         let identifier = String(describing: ConversationCell.self)
         guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? ConversationCell else { return ConversationCell() }
         
-        
-        let channel = channelObject.toChannel()
         cell.configure(with: channel)
         
         return cell
@@ -190,9 +184,8 @@ extension ConversationsListViewController: NSFetchedResultsControllerDelegate{
             }
         case .update:
             if let indexPath = indexPath {
-                let channelObject = storageManager.controller.object(at: indexPath)
+                let channel = storageManager.object(at: indexPath)
                 guard let cell = tableView.cellForRow(at: indexPath) as? ConversationCell else { break }
-                let channel = channelObject.toChannel()
                 cell.configure(with: channel)
             }
         case .move:

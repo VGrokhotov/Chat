@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Firebase
 
 class ConversationCell: UITableViewCell{
     
@@ -85,23 +84,4 @@ protocol ConfigurableView {
     associatedtype ConfigurationModel
     
     func configure(with model: ConfigurationModel)
-}
-
-
-struct Channel {
-    let identifier: String
-    let name: String
-    let lastMessage: String
-    let lastActivity: Date?
-    let section: String
-}
-
-extension Channel {
-    var toDict: [String: Any] {
-        if let date = lastActivity {
-            return ["name": name,
-                    "lastActivity": Timestamp(date: date)]
-        }
-        return ["name": name]
-    }
 }
