@@ -17,7 +17,7 @@ protocol ProfileDataManager {
      
 }
 
-class StorageManager: ProfileDataManager{
+class ProfileStorageManager: ProfileDataManager{
 
      private lazy var container: NSPersistentContainer = {
           
@@ -108,4 +108,18 @@ class StorageManager: ProfileDataManager{
 
           return [name, description, imageData]
      }
+     
+     func readMessages(for channel: Channel){
+          
+          let predicate = NSPredicate(format: "channelIdentifier == %@", channel.identifier)
+          let dateSort = NSSortDescriptor(key: "created", ascending: true)
+          
+          let fetchRequest = NSFetchRequest<MessageObject>(entityName: "MessageObject")
+          fetchRequest.predicate = predicate
+          fetchRequest.sortDescriptors = [dateSort]
+          
+          //let allMessages = try? container.viewContext.fetch(fetchRequest)
+          
+     }
+     
 }

@@ -3,7 +3,10 @@ xcuserdata/
 build/
 DerivedData/
 Pods/
+Pods/*
 
 *.xcscmblueprint
 *.xccheckout
+*.xctimeline
+*.DS_Store
 

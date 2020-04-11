@@ -93,6 +93,7 @@ struct Channel {
     let name: String
     let lastMessage: String
     let lastActivity: Date?
+    let section: String
 }
 
 extension Channel {
