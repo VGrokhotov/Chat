@@ -14,6 +14,8 @@ protocol MessagesDataManager {
     func saveMessages(messages: [Message], completion: @escaping () -> ())
     
     var controller: NSFetchedResultsController<MessageObject> {get}
+    
+    func deleteMessagesForChannel()
 }
 
 class MessagesStorageManager: MessagesDataManager{
@@ -90,6 +92,23 @@ class MessagesStorageManager: MessagesDataManager{
             
             try? context.save()
             completion()
+        }
+    }
+    
+    func deleteMessagesForChannel(){
+        container.performBackgroundTask { (context) in
+            
+            let predicate = NSPredicate(format: "channelIdentifier == %@", self.channelIdentifier)
+            let fetchRequest = NSFetchRequest<MessageObject>(entityName: "MessageObject")
+            fetchRequest.predicate = predicate
+            
+            guard let channelMessages = try? context.fetch(fetchRequest) else {return}
+            
+            for message in channelMessages{
+                context.delete(message)
+            }
+            
+            try? context.save()
         }
     }
 }

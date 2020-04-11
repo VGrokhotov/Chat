@@ -105,7 +105,11 @@ extension ConversationsListViewController: UITableViewDelegate {
         
         let channel = storageManager.controller.object(at: indexPath)
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {  (_, _, _) in
-            self.dataManager.deleteChannel(channel: channel.toChannel()) { (errorMessage) in
+            let comletion = {
+                let messageDataManager: MessagesDataManager = MessagesStorageManager(channelIdentifier: channel.identifier)
+                messageDataManager.deleteMessagesForChannel()
+            }
+            self.dataManager.deleteChannel(channel: channel.toChannel(), completion: comletion) { (errorMessage) in
                 DispatchQueue.main.async {
                     self.errorAlert(title: "Deleting error", message: errorMessage)
                 }

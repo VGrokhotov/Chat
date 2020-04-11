@@ -21,7 +21,7 @@ protocol DataManager{
     
     var channelsReloadCompletion: () -> ()  { get }
     
-    func deleteChannel(channel: Channel, errorCompletion: @escaping (String) -> ())
+    func deleteChannel(channel: Channel, completion: @escaping () -> (), errorCompletion: @escaping (String) -> ())
 }
 
 class FirebaseDataManager: DataManager{
@@ -122,10 +122,12 @@ class FirebaseDataManager: DataManager{
         completion()
     }
     
-    func deleteChannel(channel: Channel, errorCompletion: @escaping (String) -> ()) {
+    func deleteChannel(channel: Channel, completion: @escaping () -> (), errorCompletion: @escaping (String) -> ()) {
         channelsReference.document(channel.identifier).delete { (error) in
             if let error = error{
                 errorCompletion(error.localizedDescription)
+            } else {
+                completion()
             }
         }
     }
