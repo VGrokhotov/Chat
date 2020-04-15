@@ -1,5 +1,5 @@
 //
-//  FirebaseService.swift
+//  MessageService.swift
 //  Chat
 //
 //  Created by Владислав on 15.04.2020.
