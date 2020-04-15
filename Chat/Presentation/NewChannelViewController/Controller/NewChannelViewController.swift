@@ -13,7 +13,7 @@ class NewChannelViewController: UIViewController {
     @IBOutlet weak var newChannelNameTextField: UITextField!
     @IBOutlet weak var createButton: UIButton!
     
-    private var dataManager: DataManager?
+    private var dataManager: DataService?
     
     
     @IBAction func createButtonPressed(_ sender: Any) {
@@ -32,7 +32,7 @@ class NewChannelViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    static func makeVC(dataManager: DataManager) -> NewChannelViewController {
+    static func makeVC(dataManager: DataService) -> NewChannelViewController {
         let newViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: String(describing: NewChannelViewController.self)) as? NewChannelViewController
         
         guard let newVC = newViewController else {return NewChannelViewController()}

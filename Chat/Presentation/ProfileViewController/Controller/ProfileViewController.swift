@@ -24,7 +24,7 @@ class ProfileViewController: UIViewController {
     
     // MARK: - Vars and Lets
     
-    var storageManager: ProfileDataManager = ProfileStorageManager()
+    var storageManager = ProfileService()
     
     var hasNameChanged = false
     var hasDescriptionChanged = false
@@ -36,7 +36,6 @@ class ProfileViewController: UIViewController {
     @IBAction func cancelProfile(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
-    
 
     
     @IBAction func choosePhotoButtonAction(_ sender: Any) {
@@ -48,11 +47,8 @@ class ProfileViewController: UIViewController {
     }
 
     @IBAction func saveButtonPressed(_ sender: Any) {
-        
         willSwitchToViewMode()
-        
         saveData()
-        
     }
     
     func saveData(){
@@ -63,15 +59,13 @@ class ProfileViewController: UIViewController {
             imageData: profileImageView.image?.pngData(),
             hasNameChanged: hasNameChanged,
             hasDescriptionChanged: hasDescriptionChanged,
-            hasImageChanged: hasImageChanged,
-            complition: { hasSaved in
+            hasImageChanged: hasImageChanged) { hasSaved in
                 if hasSaved {
                     self.SuccessAlert(title: "Successfully saved!", message: "All information changed successfully")
                 } else {
                     self.AlertWithRetry(title: "Saving failed", message: "Could not sava data")
                 }
         }
-        )
     }
     
     
@@ -153,19 +147,19 @@ class ProfileViewController: UIViewController {
         
         registerForKeyboardNotification()
         
-        editButton.layer.cornerRadius = 10
-        editButton.layer.borderWidth = 2.0
-        editButton.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        editButton.clipsToBounds = true
-        
-        saveButton.layer.cornerRadius = 10
-        saveButton.layer.borderWidth = 2.0
-        saveButton.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        saveButton.clipsToBounds = true
+        configurate(button: editButton)
+        configurate(button: saveButton)
         
         nameTextField.delegate = self
         descriptionTextView.delegate = self
 
+    }
+    
+    func configurate(button: UIButton) {
+        button.layer.cornerRadius = 10
+        button.layer.borderWidth = 2.0
+        button.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        button.clipsToBounds = true
     }
     
     deinit {
