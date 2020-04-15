@@ -13,9 +13,9 @@
 		861C51D9242F9ABB0097D908 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861C51D8242F9ABB0097D908 /* User.swift */; };
 		86294BC8240ADA94000638AA /* ConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86294BC6240ADA94000638AA /* ConversationCell.swift */; };
 		863615942439465600B18D27 /* ChannelsStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 863615932439465600B18D27 /* ChannelsStorageManager.swift */; };
-		8646393324476FD900A2A23A /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8646393224476FD900A2A23A /* FirebaseService.swift */; };
-		864639352447701100A2A23A /* ChannelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864639342447701100A2A23A /* ChannelService.swift */; };
-		864639372447702300A2A23A /* MessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864639362447702300A2A23A /* MessageService.swift */; };
+		8646393324476FD900A2A23A /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8646393224476FD900A2A23A /* DataService.swift */; };
+		864639352447701100A2A23A /* ChannelsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864639342447701100A2A23A /* ChannelsService.swift */; };
+		864639372447702300A2A23A /* MessagesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864639362447702300A2A23A /* MessagesService.swift */; };
 		864639392447704200A2A23A /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864639382447704200A2A23A /* ProfileService.swift */; };
 		864ED894242FF44700DD321F /* ConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 864ED893242FF44700DD321F /* ConversationCell.xib */; };
 		864ED896242FF44D00DD321F /* ConversationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864ED895242FF44D00DD321F /* ConversationsListViewController.swift */; };
@@ -61,9 +61,9 @@
 		861C51D8242F9ABB0097D908 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		86294BC6240ADA94000638AA /* ConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCell.swift; sourceTree = "<group>"; };
 		863615932439465600B18D27 /* ChannelsStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsStorageManager.swift; sourceTree = "<group>"; };
-		8646393224476FD900A2A23A /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
-		864639342447701100A2A23A /* ChannelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelService.swift; sourceTree = "<group>"; };
-		864639362447702300A2A23A /* MessageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageService.swift; sourceTree = "<group>"; };
+		8646393224476FD900A2A23A /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		864639342447701100A2A23A /* ChannelsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsService.swift; sourceTree = "<group>"; };
+		864639362447702300A2A23A /* MessagesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesService.swift; sourceTree = "<group>"; };
 		864639382447704200A2A23A /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		864ED893242FF44700DD321F /* ConversationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConversationCell.xib; sourceTree = "<group>"; };
 		864ED895242FF44D00DD321F /* ConversationsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationsListViewController.swift; sourceTree = "<group>"; };
@@ -132,8 +132,8 @@
 			children = (
 				860846BC244292D500259F5F /* Firebase */,
 				8614520E244289030036FF06 /* Channel */,
-				8614520C244288D10036FF06 /* Profile */,
 				8614520D244288EC0036FF06 /* Message */,
+				8614520C244288D10036FF06 /* Profile */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -367,9 +367,9 @@
 		86FA8F312427F85200BBE145 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				8646393224476FD900A2A23A /* FirebaseService.swift */,
-				864639342447701100A2A23A /* ChannelService.swift */,
-				864639362447702300A2A23A /* MessageService.swift */,
+				8646393224476FD900A2A23A /* DataService.swift */,
+				864639342447701100A2A23A /* ChannelsService.swift */,
+				864639362447702300A2A23A /* MessagesService.swift */,
 				864639382447704200A2A23A /* ProfileService.swift */,
 			);
 			path = Services;
@@ -560,10 +560,10 @@
 				86FA8F2D2427AC9000BBE145 /* Firebase.swift in Sources */,
 				86145206244268C50036FF06 /* Channel.swift in Sources */,
 				864ED896242FF44D00DD321F /* ConversationsListViewController.swift in Sources */,
-				864639352447701100A2A23A /* ChannelService.swift in Sources */,
+				864639352447701100A2A23A /* ChannelsService.swift in Sources */,
 				86145208244269390036FF06 /* Message.swift in Sources */,
-				864639372447702300A2A23A /* MessageService.swift in Sources */,
-				8646393324476FD900A2A23A /* FirebaseService.swift in Sources */,
+				864639372447702300A2A23A /* MessagesService.swift in Sources */,
+				8646393324476FD900A2A23A /* DataService.swift in Sources */,
 				86C00C6B2440A30400F0A543 /* MessagesStorageManager.swift in Sources */,
 				8673CF69240BA95900BFE738 /* MessageCell.swift in Sources */,
 				86294BC8240ADA94000638AA /* ConversationCell.swift in Sources */,

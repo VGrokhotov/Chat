@@ -15,9 +15,9 @@ class ConversationViewController: UIViewController {
     @IBOutlet weak var messageTextField: UITextField!
     @IBOutlet weak var sendButton: UIButton!
     
-    private var dataManager: DataManager?
+    private var dataManager: DataService?
     
-    lazy var storageManager: MessagesDataManager = MessagesStorageManager(channelIdentifier: channel?.identifier ?? "default")
+    lazy var storageManager = MessagesService(channelIdentifier: channel?.identifier ?? "default")
     
     var channel: Channel?
     
@@ -42,7 +42,7 @@ class ConversationViewController: UIViewController {
     
     
     
-    static func makeVC(with data: Channel, dataManager: DataManager) -> ConversationViewController {
+    static func makeVC(with data: Channel, dataManager: DataService) -> ConversationViewController {
 
         let newViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: String(describing: ConversationViewController.self)) as? ConversationViewController
         

@@ -13,13 +13,11 @@ class ConversationsListViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    private lazy var dataManager: DataManager = FirebaseDataManager(channelsReloader: {
+    private lazy var dataManager = DataService(channelsReloader: {
         self.tableView.reloadData()
     })
     
-    var storageManager: ChannelsDataManager = ChannelsStorageManager()
-
-    
+    var storageManager = ChannelsService()
 
     override func viewDidLoad() {
         super.viewDidLoad()

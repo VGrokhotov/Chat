@@ -24,7 +24,7 @@ class ProfileViewController: UIViewController {
     
     // MARK: - Vars and Lets
     
-    var storageManager: ProfileDataManager = ProfileStorageManager()
+    var storageManager = ProfileService()
     
     var hasNameChanged = false
     var hasDescriptionChanged = false
