@@ -215,7 +215,9 @@ extension ProfileViewController{
     }
     
     func enableSaveButtons() {
-        saveButton.isEnabled = true
+        if !hasNameChanged && !hasDescriptionChanged && !hasImageChanged{
+            saveButton.isEnabled = true
+        }
     }
     
     func switchToEditting() {
@@ -286,11 +288,9 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         
         profileImageView.image = info[.editedImage] as? UIImage
         
-        if !hasNameChanged && !hasDescriptionChanged && !hasImageChanged{
-            enableSaveButtons()
-        }
-        
+        enableSaveButtons()
         hasImageChanged = true
+        
         profileImageView.contentMode = .scaleAspectFill
         profileImageView.clipsToBounds = true
 
@@ -301,6 +301,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         
         let cameraIcon = #imageLiteral(resourceName: "Camera")
         let photoIcon = #imageLiteral(resourceName: "Photo")
+        let networkIcon = #imageLiteral(resourceName: "network")
 
         let actionSheet = UIAlertController(title: nil,
                                             message: nil,
@@ -316,11 +317,23 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         }
         photo.setValue(photoIcon, forKey: "image")
         photo.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+        
+        let imageFromNetwork = UIAlertAction(title: "Network", style: .default) { _ in
+            let destinationViewController = ImageChoosingViewController.makeVC { image in
+                self.profileImageView.image = image
+                self.enableButtons()
+                self.hasImageChanged = true
+            }
+            self.present(destinationViewController, animated: true)
+        }
+        imageFromNetwork.setValue(networkIcon, forKey: "image")
+        imageFromNetwork.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 
         let cancel = UIAlertAction(title: "Cancel", style: .cancel)
 
         actionSheet.addAction(camera)
         actionSheet.addAction(photo)
+        actionSheet.addAction(imageFromNetwork)
         actionSheet.addAction(cancel)
 
         present(actionSheet, animated: true)
@@ -359,10 +372,7 @@ extension ProfileViewController: UITextFieldDelegate{
     
     @objc private func textFieldChanged(){
         
-        if !hasNameChanged && !hasDescriptionChanged && !hasImageChanged{
-            enableSaveButtons()
-        }
-        
+        enableSaveButtons()
         hasNameChanged = true
         
         if nameTextField.text?.count == 0{
@@ -379,10 +389,7 @@ extension ProfileViewController: UITextViewDelegate{
     
     func textViewDidChange(_ textView: UITextView) {
         
-        if !hasNameChanged && !hasDescriptionChanged && !hasImageChanged{
-            enableSaveButtons()
-        }
-        
+        enableSaveButtons()
         hasDescriptionChanged = true
     }
 
