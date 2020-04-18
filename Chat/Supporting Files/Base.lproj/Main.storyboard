@@ -3,7 +3,7 @@
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -213,14 +213,14 @@
                                     <action selector="choosePhotoButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7NK-Ev-9dp"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Владислав Грохотов" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecq-sX-PKn">
-                                <rect key="frame" x="10" y="473" width="394" height="48"/>
-                                <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Владислав Грохотов" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecq-sX-PKn">
+                                <rect key="frame" x="20" y="473" width="374" height="36"/>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Medium" family="Apple SD Gothic Neo" pointSize="30"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Студент-разработчик под iOS" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O9R-lE-Hen">
-                                <rect key="frame" x="20" y="531" width="374" height="21.666666666666629"/>
+                                <rect key="frame" x="20" y="519" width="374" height="21.666666666666629"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="17" id="9yR-eT-MKo"/>
                                 </constraints>
@@ -254,15 +254,15 @@
                                 </connections>
                             </button>
                             <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your name" minimumFontSize="20" translatesAutoresizingMaskIntoConstraints="NO" id="8nc-Yh-IcV">
-                                <rect key="frame" x="20" y="473" width="374" height="53"/>
-                                <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="27"/>
+                                <rect key="frame" x="20" y="473" width="374" height="42.333333333333371"/>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Medium" family="Apple SD Gothic Neo" pointSize="27"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="WiR-IT-t7W"/>
                                 </connections>
                             </textField>
                             <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="249" verticalCompressionResistancePriority="749" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="207" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ZSx-Nr-PVF">
-                                <rect key="frame" x="20" y="536" width="374" height="256"/>
+                                <rect key="frame" x="20" y="525.33333333333337" width="374" height="266.66666666666663"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="18"/>
@@ -314,14 +314,14 @@
                             <constraint firstItem="72N-GS-1vh" firstAttribute="width" secondItem="APB-Wu-jkM" secondAttribute="width" multiplier="1:4" id="f96-BY-Xr1"/>
                             <constraint firstItem="8nc-Yh-IcV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="fYZ-ox-HGg"/>
                             <constraint firstItem="ySt-hV-HJv" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="h9G-Yd-vNI"/>
-                            <constraint firstItem="ecq-sX-PKn" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="hpr-9a-8Zw"/>
+                            <constraint firstItem="ecq-sX-PKn" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="hpr-9a-8Zw"/>
                             <constraint firstItem="APB-Wu-jkM" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="lGr-Cg-Oq6"/>
                             <constraint firstItem="O9R-lE-Hen" firstAttribute="top" secondItem="ecq-sX-PKn" secondAttribute="bottom" constant="10" id="lPO-aC-AsD"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ZSx-Nr-PVF" secondAttribute="trailing" constant="20" id="oDD-Z6-4G7"/>
                             <constraint firstItem="APB-Wu-jkM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="rHE-mM-J7o"/>
                             <constraint firstItem="72N-GS-1vh" firstAttribute="trailing" secondItem="APB-Wu-jkM" secondAttribute="trailing" id="uj5-gK-llt"/>
                             <constraint firstItem="O9R-lE-Hen" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="wcK-KK-WFM"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ecq-sX-PKn" secondAttribute="trailing" constant="10" id="x1Z-uU-8hm"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ecq-sX-PKn" secondAttribute="trailing" constant="20" id="x1Z-uU-8hm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -340,6 +340,50 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-610.14492753623188" y="77.678571428571431"/>
+        </scene>
+        <!--Image Choosing View Controller-->
+        <scene sceneID="cZG-Jl-BuM">
+            <objects>
+                <viewController storyboardIdentifier="ImageChoosingViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ugB-QA-yfQ" customClass="ImageChoosingViewController" customModule="Chat" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ff7-WE-hxM">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="0i9-v5-lXu">
+                                <rect key="frame" x="188.66666666666666" y="429.66666666666669" width="37" height="37"/>
+                                <color key="color" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
+                            <collectionView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="829-yf-zb8">
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Har-2e-k27">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="829-yf-zb8" firstAttribute="leading" secondItem="8WC-Gw-17Y" secondAttribute="leading" id="C3X-7B-iVs"/>
+                            <constraint firstItem="0i9-v5-lXu" firstAttribute="centerX" secondItem="ff7-WE-hxM" secondAttribute="centerX" id="ZXl-vo-2S9"/>
+                            <constraint firstAttribute="bottom" secondItem="829-yf-zb8" secondAttribute="bottom" id="e9m-zx-R7l"/>
+                            <constraint firstItem="829-yf-zb8" firstAttribute="trailing" secondItem="8WC-Gw-17Y" secondAttribute="trailing" id="nZc-fS-eTT"/>
+                            <constraint firstItem="829-yf-zb8" firstAttribute="top" secondItem="8WC-Gw-17Y" secondAttribute="top" id="nt1-xp-IKV"/>
+                            <constraint firstItem="0i9-v5-lXu" firstAttribute="centerY" secondItem="ff7-WE-hxM" secondAttribute="centerY" id="vsV-SS-SQd"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="8WC-Gw-17Y"/>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="0i9-v5-lXu" id="aE0-uL-dUd"/>
+                        <outlet property="collectionView" destination="829-yf-zb8" id="G5e-oL-WEx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nhm-Ly-UAJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1534.7826086956522" y="79.6875"/>
         </scene>
     </scenes>
     <resources>

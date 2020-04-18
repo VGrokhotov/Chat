@@ -25,7 +25,12 @@
 		864ED89E242FF45F00DD321F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864ED89D242FF45E00DD321F /* ProfileViewController.swift */; };
 		86514ED7242FA34E0060D62E /* ProfileStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86514ED6242FA34E0060D62E /* ProfileStorageManager.swift */; };
 		8673CF69240BA95900BFE738 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8673CF67240BA95900BFE738 /* MessageCell.swift */; };
+		8688137D244A6A710078C372 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8688137B244A6A710078C372 /* ImageCell.swift */; };
+		8688137E244A6A710078C372 /* ImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8688137C244A6A710078C372 /* ImageCell.xib */; };
 		8698039C243F90FD00763871 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8698039B243F90FD00763871 /* GoogleService-Info.plist */; };
+		869AEAFD244A2323002EC4A7 /* ImageChoosingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869AEAFB244A2323002EC4A7 /* ImageChoosingViewController.swift */; };
+		869AEB01244A237C002EC4A7 /* ImagesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869AEB00244A237C002EC4A7 /* ImagesService.swift */; };
+		869AEB04244A239E002EC4A7 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869AEB03244A239E002EC4A7 /* Images.swift */; };
 		86C00C6B2440A30400F0A543 /* MessagesStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C00C6A2440A30400F0A543 /* MessagesStorageManager.swift */; };
 		86E19CD42438E37400F885B8 /* MessageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E19CD32438E37400F885B8 /* MessageObject.swift */; };
 		86E19CD62438E38F00F885B8 /* ChannelObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E19CD52438E38F00F885B8 /* ChannelObject.swift */; };
@@ -73,7 +78,12 @@
 		864ED89D242FF45E00DD321F /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		86514ED6242FA34E0060D62E /* ProfileStorageManager.swift */ = {isa = PBXFileReference; indentWidth = 5; lastKnownFileType = sourcecode.swift; path = ProfileStorageManager.swift; sourceTree = "<group>"; };
 		8673CF67240BA95900BFE738 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		8688137B244A6A710078C372 /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
+		8688137C244A6A710078C372 /* ImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageCell.xib; sourceTree = "<group>"; };
 		8698039B243F90FD00763871 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		869AEAFB244A2323002EC4A7 /* ImageChoosingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageChoosingViewController.swift; sourceTree = "<group>"; };
+		869AEB00244A237C002EC4A7 /* ImagesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesService.swift; sourceTree = "<group>"; };
+		869AEB03244A239E002EC4A7 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		86C00C6A2440A30400F0A543 /* MessagesStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesStorageManager.swift; sourceTree = "<group>"; };
 		86E19CD32438E37400F885B8 /* MessageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageObject.swift; sourceTree = "<group>"; };
 		86E19CD52438E38F00F885B8 /* ChannelObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelObject.swift; sourceTree = "<group>"; };
@@ -130,6 +140,7 @@
 		8614520B2442883D0036FF06 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				869AEB02244A2386002EC4A7 /* Images */,
 				860846BC244292D500259F5F /* Firebase */,
 				8614520E244289030036FF06 /* Channel */,
 				8614520D244288EC0036FF06 /* Message */,
@@ -314,12 +325,47 @@
 		864ED89F242FF48F00DD321F /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				869AEAF9244A2112002EC4A7 /* ImageChoosingViewController */,
 				8646393D2447720500A2A23A /* NewChannelViewController */,
 				8646393C244771DD00A2A23A /* ProfileViewController */,
 				8646393B2447715500A2A23A /* ConversationsListViewController */,
 				8646393A2447713600A2A23A /* ConversationViewController */,
 			);
 			path = Presentation;
+			sourceTree = "<group>";
+		};
+		8688137F244A6A7B0078C372 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8688137B244A6A710078C372 /* ImageCell.swift */,
+				8688137C244A6A710078C372 /* ImageCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		869AEAF9244A2112002EC4A7 /* ImageChoosingViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8688137F244A6A7B0078C372 /* View */,
+				869AEAFA244A2157002EC4A7 /* Controller */,
+			);
+			path = ImageChoosingViewController;
+			sourceTree = "<group>";
+		};
+		869AEAFA244A2157002EC4A7 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				869AEAFB244A2323002EC4A7 /* ImageChoosingViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		869AEB02244A2386002EC4A7 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				869AEB03244A239E002EC4A7 /* Images.swift */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 		86EE098F23F9B91700D03091 = {
@@ -371,6 +417,7 @@
 				864639342447701100A2A23A /* ChannelsService.swift */,
 				864639362447702300A2A23A /* MessagesService.swift */,
 				864639382447704200A2A23A /* ProfileService.swift */,
+				869AEB00244A237C002EC4A7 /* ImagesService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -472,6 +519,7 @@
 			files = (
 				86EE09AB23F9B91900D03091 /* LaunchScreen.storyboard in Resources */,
 				864ED89A242FF45500DD321F /* MessageCell.xib in Resources */,
+				8688137E244A6A710078C372 /* ImageCell.xib in Resources */,
 				86EE09A823F9B91900D03091 /* Assets.xcassets in Resources */,
 				86EE09A323F9B91700D03091 /* Main.storyboard in Resources */,
 				864ED894242FF44700DD321F /* ConversationCell.xib in Resources */,
@@ -557,6 +605,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				869AEAFD244A2323002EC4A7 /* ImageChoosingViewController.swift in Sources */,
 				86FA8F2D2427AC9000BBE145 /* Firebase.swift in Sources */,
 				86145206244268C50036FF06 /* Channel.swift in Sources */,
 				864ED896242FF44D00DD321F /* ConversationsListViewController.swift in Sources */,
@@ -565,9 +614,12 @@
 				864639372447702300A2A23A /* MessagesService.swift in Sources */,
 				8646393324476FD900A2A23A /* DataService.swift in Sources */,
 				86C00C6B2440A30400F0A543 /* MessagesStorageManager.swift in Sources */,
+				8688137D244A6A710078C372 /* ImageCell.swift in Sources */,
 				8673CF69240BA95900BFE738 /* MessageCell.swift in Sources */,
 				86294BC8240ADA94000638AA /* ConversationCell.swift in Sources */,
+				869AEB01244A237C002EC4A7 /* ImagesService.swift in Sources */,
 				861C51D9242F9ABB0097D908 /* User.swift in Sources */,
+				869AEB04244A239E002EC4A7 /* Images.swift in Sources */,
 				86EE09A623F9B91700D03091 /* Chat.xcdatamodeld in Sources */,
 				86E19CD42438E37400F885B8 /* MessageObject.swift in Sources */,
 				86EE099C23F9B91700D03091 /* AppDelegate.swift in Sources */,
