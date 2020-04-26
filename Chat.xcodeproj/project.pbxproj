@@ -10,6 +10,7 @@
 		0FFB5C4138720EAA61BC0F65 /* Pods_ChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71FAA72EEB14A9DCAEF1864F /* Pods_ChatTests.framework */; };
 		86145206244268C50036FF06 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86145205244268C50036FF06 /* Channel.swift */; };
 		86145208244269390036FF06 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86145207244269390036FF06 /* Message.swift */; };
+		86196ECD24550B9800812CED /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86196ECC24550B9800812CED /* ViewControllerExtension.swift */; };
 		861C51D9242F9ABB0097D908 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861C51D8242F9ABB0097D908 /* User.swift */; };
 		86294BC8240ADA94000638AA /* ConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86294BC6240ADA94000638AA /* ConversationCell.swift */; };
 		863615942439465600B18D27 /* ChannelsStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 863615932439465600B18D27 /* ChannelsStorageManager.swift */; };
@@ -63,6 +64,7 @@
 		71FAA72EEB14A9DCAEF1864F /* Pods_ChatTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		86145205244268C50036FF06 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		86145207244269390036FF06 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		86196ECC24550B9800812CED /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
 		861C51D8242F9ABB0097D908 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		86294BC6240ADA94000638AA /* ConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCell.swift; sourceTree = "<group>"; };
 		863615932439465600B18D27 /* ChannelsStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsStorageManager.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				86EE09A923F9B91900D03091 /* LaunchScreen.storyboard */,
 				8698039B243F90FD00763871 /* GoogleService-Info.plist */,
 				86EE09A423F9B91700D03091 /* Chat.xcdatamodeld */,
+				86196ECC24550B9800812CED /* ViewControllerExtension.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -605,6 +608,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86196ECD24550B9800812CED /* ViewControllerExtension.swift in Sources */,
 				869AEAFD244A2323002EC4A7 /* ImageChoosingViewController.swift in Sources */,
 				86FA8F2D2427AC9000BBE145 /* Firebase.swift in Sources */,
 				86145206244268C50036FF06 /* Channel.swift in Sources */,
