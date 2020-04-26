@@ -35,7 +35,7 @@ class ConversationViewController: UIViewController {
             }
             
             messageTextField.text = ""
-            sendButton.isEnabled = false
+            increasingPlusDecreasingAnimation(button: sendButton, isEnable: false)
             scrollDown(animated: true)
         }
     }
@@ -72,6 +72,11 @@ class ConversationViewController: UIViewController {
         messageTextField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
         
         sendButton.isEnabled = false
+        sendButton.adjustsImageWhenDisabled = false
+        let image = sendButton.imageView?.image?
+            .withRenderingMode(.alwaysTemplate)
+        sendButton.setImage(image, for: .normal)
+        sendButton.tintColor = .gray
         
         setupToHideKeyboardOnTapOnView()
         
@@ -237,11 +242,48 @@ extension ConversationViewController: UITextFieldDelegate{
     
     @objc private func textFieldChanged(){
         if messageTextField.text?.count == 0{
+            
+            increasingPlusDecreasingAnimation(button: sendButton, isEnable: false)
             sendButton.isEnabled = false
         }
         else{
-            sendButton.isEnabled = true
+            if !sendButton.isEnabled {
+                self.sendButton.isEnabled = true
+                increasingPlusDecreasingAnimation(button: sendButton, isEnable: true)
+            }
         }
+    }
+    
+    func increasingPlusDecreasingAnimation(button: UIButton, isEnable: Bool) {
+        
+        UIView.animateKeyframes(
+            withDuration: 1,
+            delay: 0,
+            animations: {
+                
+                UIView.addKeyframe(
+                    withRelativeStartTime: 0,
+                    relativeDuration: 0.5) {
+                        button.transform = CGAffineTransform(scaleX: 1.15, y: 1.15)
+                }
+                
+                UIView.addKeyframe(
+                    withRelativeStartTime: 0.5,
+                    relativeDuration: 0.5) {
+                        button.transform = CGAffineTransform(scaleX: 1, y: 1)
+                }
+                
+                UIView.addKeyframe(
+                    withRelativeStartTime: 0,
+                    relativeDuration: 1) {
+                        if isEnable{
+                            button.tintColor = .systemBlue
+                        } else {
+                            button.tintColor = .gray
+                        }
+                }
+                
+        }, completion: nil)
     }
 }
 
