@@ -27,55 +27,59 @@ extension UIViewController {
 
 //MARK: Work with touches
 
-extension UIView {
+extension UIWindow {
     
     private struct TouchInfo {
-        static var flag: Bool = false
-        static var updateTime: Double = 0
+        static var timer = Timer()
         static var picturesInterval: Double = 0.1
+        static var touchLocation: CGPoint = CGPoint()
     }
     
-    
-    private var isTouching: Bool {
-        get {
-            return TouchInfo.flag
-        }
-        set(newValue) {
-            TouchInfo.flag = newValue
-        }
-    }
     
     override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-
-        isTouching = true
-        createPicturesWhileTouching(touches: touches)
+        
+        touches.forEach { (touch) in
+            
+            TouchInfo.touchLocation = touch.location(in: self)
+            startTimer()
+        }
+    }
+    
+    open override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        touches.forEach { (touch) in
+            TouchInfo.touchLocation = touch.location(in: self)
+        }
     }
     
     open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
-        isTouching = false
+        
+        stopTimer()
     }
     
-    func createPicturesWhileTouching(touches: Set<UITouch>){
-        touches.forEach { (touch) in
-            
-            while(isTouching) {
-                let currentTime = Date().timeIntervalSince1970
-                if TouchInfo.updateTime == 0 {
-                    TouchInfo.updateTime = currentTime
-                }
+    open override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesCancelled(touches, with: event)
+        
+        stopTimer()
+    }
 
-                if currentTime - TouchInfo.updateTime > TouchInfo.picturesInterval {
-                    createPicture(touch: touch)
-                    TouchInfo.updateTime = currentTime
-                }
-            }
-        }
+    func startTimer() {
+        TouchInfo.timer = Timer.scheduledTimer(
+            timeInterval: 0.2,
+            target: self,
+            selector: #selector(createPicture),
+            userInfo: nil,
+            repeats: true)
+    }
+
+    func stopTimer() {
+        TouchInfo.timer.invalidate()
+        TouchInfo.timer = Timer()
     }
     
-    func createPicture(touch: UITouch) {
-        let location = touch.location(in: self)
+    @objc func createPicture() {
+        let location = TouchInfo.touchLocation
         
         let imageView = UIImageView(frame: CGRect(x: location.x, y: location.y, width: 20, height: 20))
         //imageView.center = location
@@ -91,29 +95,27 @@ extension UIView {
         let deltaX = 50 * cos(angle * CGFloat.pi / 180)
         let deltaY = 50 * sin(angle * CGFloat.pi / 180)
         
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            imageView.removeFromSuperview()
+        }
+        
         UIView.animateKeyframes(
-            withDuration: 0.3,
+            withDuration: 0.5,
             delay: 0,
             animations: {
                 
                 UIView.addKeyframe(
                     withRelativeStartTime: 0,
-                    relativeDuration: 0.3) {
+                    relativeDuration: 0.5) {
                         imageView.center = CGPoint(
-                            x: touch.location(in: self).x + deltaX,
-                            y: touch.location(in: self).y + deltaY)
+                            x: location.x + deltaX,
+                            y: location.y + deltaY)
                 }
                 
                 UIView.addKeyframe(
-                    withRelativeStartTime: 0.1,
-                    relativeDuration: 0.29) {
+                    withRelativeStartTime: 0.3,
+                    relativeDuration: 0.49) {
                         imageView.alpha = 0
-                }
-                
-                UIView.addKeyframe(
-                    withRelativeStartTime: 0.29,
-                    relativeDuration: 0.3) {
-                        imageView.removeFromSuperview()
                 }
                 
         }, completion: nil)
