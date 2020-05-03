@@ -28,6 +28,7 @@
 		8673CF69240BA95900BFE738 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8673CF67240BA95900BFE738 /* MessageCell.swift */; };
 		8688137D244A6A710078C372 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8688137B244A6A710078C372 /* ImageCell.swift */; };
 		8688137E244A6A710078C372 /* ImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8688137C244A6A710078C372 /* ImageCell.xib */; };
+		868DEF6F245EF47E00646468 /* ChannelsSorter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868DEF6D245EF47E00646468 /* ChannelsSorter.swift */; };
 		8698039C243F90FD00763871 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8698039B243F90FD00763871 /* GoogleService-Info.plist */; };
 		869AEAFD244A2323002EC4A7 /* ImageChoosingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869AEAFB244A2323002EC4A7 /* ImageChoosingViewController.swift */; };
 		869AEB01244A237C002EC4A7 /* ImagesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869AEB00244A237C002EC4A7 /* ImagesService.swift */; };
@@ -82,6 +83,7 @@
 		8673CF67240BA95900BFE738 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		8688137B244A6A710078C372 /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		8688137C244A6A710078C372 /* ImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageCell.xib; sourceTree = "<group>"; };
+		868DEF6D245EF47E00646468 /* ChannelsSorter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsSorter.swift; sourceTree = "<group>"; };
 		8698039B243F90FD00763871 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		869AEAFB244A2323002EC4A7 /* ImageChoosingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageChoosingViewController.swift; sourceTree = "<group>"; };
 		869AEB00244A237C002EC4A7 /* ImagesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesService.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 				8698039B243F90FD00763871 /* GoogleService-Info.plist */,
 				86EE09A423F9B91700D03091 /* Chat.xcdatamodeld */,
 				86196ECC24550B9800812CED /* UIExtensions.swift */,
+				868DEF6D245EF47E00646468 /* ChannelsSorter.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -641,6 +644,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				868DEF6F245EF47E00646468 /* ChannelsSorter.swift in Sources */,
 				86EE09B623F9B91A00D03091 /* ChatTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

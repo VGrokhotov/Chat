@@ -26,3 +26,9 @@ extension Channel {
         return ["name": name]
     }
 }
+
+extension Channel: Equatable {
+    static func ==(lhs: Channel, rhs: Channel) -> Bool {
+        return lhs.identifier == rhs.identifier
+    }
+}
